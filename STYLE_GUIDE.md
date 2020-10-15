@@ -1,5 +1,38 @@
 # Style Guide
 
+## General Guidelines
+For all documents within this repository
+* Use 4 spaces for indentations
+* Ensure proper indentation for all code
+E.g.
+```HTML
+<div>
+    <p>Some content here</p>
+        </div>
+```
+```javascript
+for (let i=0 ; i<5 ; i++) {
+    if (true) {
+    // Do something
+}
+}
+```
+No good!
+```HTML
+<div>
+    <p>Some content here</p>
+</div>
+```
+```javascript
+for (let i=0 ; i<5 ; i++) {
+    if (true) {
+        // Do something
+    }
+}
+```
+Very good!
+* Wrap content onto new lines if code is too long
+
 ## Javascript
 * Functions should be named using PascalCase
 * Variables should be named using camelCase.
