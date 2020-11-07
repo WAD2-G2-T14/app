@@ -20,9 +20,6 @@ $verified = password_verify($password, $stored_password);
 if ($verified) {
     $details = $dao->getUserDetails($user_id);
 
-    $details['user_id'] = $user_id;
-    $details['email'] = $email;
-
     http_response_code(200);
     echo json_encode($details); 
 } else {

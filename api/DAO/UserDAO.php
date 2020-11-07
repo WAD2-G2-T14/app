@@ -47,14 +47,15 @@ class UserDAO {
         if ($stmt->execute()) {
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $row = $stmt->fetch();
+            $email = $row['email'];
             $name = $row['fullname'];
             $phone = $row['phone_number'];
-            $birthday = $row['birthday'];
 
             return [
+                'user_id' => $user_id,
+                'email' => $email,
                 'name' => $name,
                 'phone' => $phone,
-                'birthday' => $birthday
             ];
         }
     }
