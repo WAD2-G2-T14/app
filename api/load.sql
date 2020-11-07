@@ -33,6 +33,6 @@ CREATE TABLE user_addresses (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-INSERT INTO users VALUES ('5fa40d29e57d4', 'jonathan@mail.com', '$2y$10$s9Ct7uZgLolsvyXXef7dw.VtL9PYi3PNM89DME.jwoBV/ZsgSVreu', '91234567', '1998-12-25', 'Jonathan Tan Jia Wei');
+INSERT INTO users VALUES ('5fa40d29e57d4', 'jonathan@mail.com', '$2y$10$s9Ct7uZgLolsvyXXef7dw.VtL9PYi3PNM89DME.jwoBV/ZsgSVreu', '91234567', 'Jonathan Tan Jia Wei');
 INSERT INTO user_credit_cards VALUES ('5fa40d29e57d4', '432188885581', 'Jonathan Tan', '01/22', '432');
 INSERT INTO user_addresses VALUES ('5fa40d29e57d4', '612345', 'Singapore', '13 Mayflower Street #12-02', 'Singapore');
