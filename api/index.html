@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supreme Leader's Shopping API Documentation</title>
+</head>
+
+<style>
+  body {
+    width: 80%;
+    margin: auto;
+    font-family: Roboto, Helvetica, sans-serif;
+  }
+
+  .container {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 1em;
+  }
+
+  .endpoint {
+    border-bottom: 1px solid black;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+  }
+
+  .GET {
+    color: white;
+    border-radius: 10px;
+    padding: 0.5em;
+    background-color: green;
+  }
+
+  .POST {
+    color: white;
+    border-radius: 10px;
+    padding: 0.5em;
+    background-color: orange;
+  }
+
+  .DELETE {
+    color: white;
+    border-radius: 10px;
+    padding: 0.5em;
+    background-color: red;
+  }
+</style>
+
+<body>
+  <h1>Supreme Leader's Shopping API Documentation</h1>
+
+  <div class='container'>
+    <h2>Authentication</h2>
+
+    <div class='endpoint'>
+      <h4> 
+        <span class='POST'>POST</span>
+        /api/login.php
+      </h4>
+      
+      <p>
+        This api handles user logins and returns the user id and details if successfully verified.
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>username*</li>
+        <li>password*</li>
+      </ul>
+
+      <mark>Response Example</mark>
+      <ul>
+        <li>"name": "Jonathan Tan Jia Wei"</li>
+        <li>"phone": "91234567"</li>
+        <li>"birthday": "1998-12-25"</li>
+        <li>"user_id": "5fa40d29e57d4"</li>
+        <li>"email": "jonathan@mail.com"</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='POST'>POST</span>
+        /api/signup.php
+      </h4>
+    
+      <p>
+        This api handles user signups.
+      </p>
+    
+      <mark>Payload</mark>
+      <ul>
+        <li>username*</li>
+        <li>password*</li>
+        <li>name*</li>
+        <li>postal_code*</li>
+        <li>address*</li>
+        <li>city*</li>
+        <li>country*</li>
+        <li>phone_number*</li>
+        <li>birthday</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
