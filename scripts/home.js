@@ -1,3 +1,3 @@
 const initial = () => {
-    alert('Welcome!')
+    console.log('im here')
 }
