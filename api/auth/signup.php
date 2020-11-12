@@ -64,6 +64,7 @@ if (count($error_arr) === 0 ) {
 
     if ($result) {
         http_response_code(200);
+        echo json_encode(["message" => "Welcome to the club"]);
     } else {
         http_response_code(400);
     }
