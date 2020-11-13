@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +18,7 @@
     border: 1px solid black;
     border-radius: 10px;
     padding: 1em;
+    margin-bottom: 1em;
   }
 
   .endpoint {
@@ -54,11 +56,11 @@
     <h2>Authentication</h2>
 
     <div class='endpoint'>
-      <h4> 
+      <h4>
         <span class='POST'>POST</span>
-        /api/login.php
+        /api/auth/login.php
       </h4>
-      
+
       <p>
         This api handles user logins and returns the user id and details if successfully verified.
       </p>
@@ -73,7 +75,6 @@
       <ul>
         <li>"name": "Jonathan Tan Jia Wei"</li>
         <li>"phone": "91234567"</li>
-        <li>"birthday": "1998-12-25"</li>
         <li>"user_id": "5fa40d29e57d4"</li>
         <li>"email": "jonathan@mail.com"</li>
       </ul>
@@ -82,13 +83,13 @@
     <div class='endpoint'>
       <h4>
         <span class='POST'>POST</span>
-        /api/signup.php
+        /api/auth/signup.php
       </h4>
-    
+
       <p>
         This api handles user signups.
       </p>
-    
+
       <mark>Payload</mark>
       <ul>
         <li>email*</li>
@@ -99,9 +100,88 @@
         <li>city*</li>
         <li>country*</li>
         <li>phone_number*</li>
-        <li>birthday</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class='container'>
+    <h2>Items</h2>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='GET'>GET</span>
+        /api/items/all.php
+      </h4>
+
+      <p>
+        This api returns the expiry and order status for all items
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>none</li>
+      </ul>
+
+      <mark>Response Example</mark>
+      <ul>
+        <li>"01351492" :</li>
+        <ul>
+          <li>"current_orders" : 5</li>
+          <li>"total_required" : 10</li>
+          <li>"expiry" : "2020-12-25"</li>
+        </ul>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='GET'>GET</span>
+        /api/items/show_one.php
+      </h4>
+
+      <p>
+        This api returns the expiry and order status for one item
+      </p>
+
+      <mark>URL Params</mark>
+      <ul>
+        <li>item_id=01351492</li>
+      </ul>
+
+      <mark>Response Example</mark>
+      <ul>
+        <li>"current_orders" : 5</li>
+        <li>"total_required" : 10</li>
+        <li>"expiry" : "2020-12-25"</li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>
+        <span class='POST'>PUT</span>
+        /api/items/order.php
+      </h4>
+
+      <p>
+        This api handles the ordering logic and accepts the user's cart details
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>"user_id"</li>
+        <li>"item_list"</li>
+        <ul>
+          <li>"0" => </li>
+          <li>"item_id"</li>
+          <li>"quantity"</li>
+          <li>"1" => </li>
+          <li>"item_id"</li>
+          <li>"quantity"</li>
+          <li>...</li>
+        </ul>
       </ul>
     </div>
   </div>
 </body>
+
 </html>
