@@ -185,5 +185,25 @@ class UserDAO {
             return TRUE;
         }
     }
+
+    public function updateDetails($user_id, $fullname, $email) {
+        $database = new ConnectionManager();
+        $pdo = $database->connect();
+
+        $sql = "
+            UPDATE users
+            SET fullname = :fullname, email = :email
+            WHERE user_id = :user_id
+        ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':fullname', $fullname, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            return TRUE;
+        }
+    }
 }
 ?>
