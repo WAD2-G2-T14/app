@@ -15,13 +15,63 @@
     <script src="scripts/home.js"></script>
 </head>
 
+<style>
+    .btn {
+    border: none;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    outline: none;
+    overflow: hidden;
+    /* position: relative; */
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    background-color: #222;
+    padding: 17px 60px;
+    margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+  
+    position: absolute;
+    top: 120px;
+    right: 20px;
+  }
+  
+  .btn span {
+    position: relative; 
+    z-index: 1;
+  }
+  
+  .btn:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 490%;
+    width: 140%;
+    background: #FED143;
+    -webkit-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+    -webkit-transform: translateX(-98%) translateY(-18%) rotate(45deg);
+    transform: translateX(-98%) translateY(-18%) rotate(45deg);
+  }
+  
+  .btn:hover:after {
+    -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+    transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  }
+
+ 
+</style>
+
 
 <header>
     <div class="headerimage">
-        <img class="d-block w-100" src="images/amir-soltani-UZqMaxlFmBM-unsplash.jpg" style="max-width: 100%; height:480px;">
+        <img id="image" class="d-block w-100" src="images/amir-soltani-UZqMaxlFmBM-unsplash.jpg" style="max-width: 100%; height:480px;">
 
         <h1 class="direction">Free International Shipping <br> All Year Round</h1>
-        <button class="btn"><span>See More</span></button>
+        <button class="btn" onclick="sickbtn()"><span>See More</span></button>
     </div>
 </header>
 
@@ -50,6 +100,7 @@
     </section>
 
     <div class="about">
+        <a id= "aboutus-section"></a>
         <img class="d-block w-100" src="images/david-lezcano-NfZiOJzZgcg-unsplash.jpg" style="max-width: 100%; height: 600px; margin-top: 30px;">
 
         <div class="box justify-content-center align-items-center" id="block" style="background: bisque; width: 500px; height: 280px; color:black; padding: 2%">
@@ -65,7 +116,7 @@
     <footer id ="main-footer">
         <div class="row" >
             <div class="col-12 col-md mb-0">
-                <img src="../IS216/Shopping-Club/images/logoYellow.svg" width="100px" height="60px" style="max-width:100%;">
+                <img src="images/logoYellow.svg" width="100px" height="60px" style="max-width:100%;">
                 <!-- <svg xmlns="https://github.com/WAD2-G2-T14/Shopping-Club/blob/main/images/logoYellow.svg"></svg> -->
                 <small class="d-block mb-3 text-muted">&copy; 2020 Supreme</small>
             </div>
@@ -73,7 +124,7 @@
             <div class="col-6 col-md">
                 <h6>ABOUT</h6>
                 <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">About Supreme</a></li>
+                <li><a href="#aboutus-section">About Supreme</a></li>
                 </ul>
             </div>
   

@@ -1,18 +1,13 @@
 var item_details
 fetch('api/items/all.php')
 .then(response => response.json())
-.then(json => {
-    console.log(json);
-    var response = JSON.parse(json)
-    item_details = response
-    
-})
+.then(json => item_details = json)
 .catch(function(item_status){
   console.log("Error detected")
 })
 
-const data = null;
 
+const data = null;
 const xhr = new XMLHttpRequest();
 xhr.withCredentials = false;
 
@@ -37,13 +32,30 @@ function push(p_id){
   document.cookie = p_id;
   //console.log(document.cookie);
   window.location.href ='listing_page.html';
-  
 }
 
 function display(all_products){
   var trending_listings = document.getElementById("trending_cards");
-  var counter = 0
+  
+
   for(i=0; i < 4; i++){
+    var item_id = all_products[i].id;
+    
+    // console.log(item_details);
+
+    if(item_details.length !== 0 && item_id in item_details){
+      var progress =  (item_details[item_id][current_orders] / item_details[item_id][total_required])*100
+      var current_orders = item_details[item_id][current_orders];
+      var total_required = item_details[item_id][total_required];
+
+    }
+    else{
+      var progress = 0
+      var current_orders = 0
+      var total_required = 0
+    }
+
+    
       counter += 1
       trending_listings.innerHTML += `
           <div class="col-sm-12 col-md-6 col-lg-3">
@@ -90,7 +102,8 @@ function display(all_products){
 
 
                   <div class="card-body">
-                      <h6 class="card-title">${all_products[i].name}</h6>                           
+                      <h6 class="card-title">${all_products[i].name}</h6> 
+                                               
                   </div>
 
                   
@@ -98,25 +111,40 @@ function display(all_products){
                       
                       <div class="skill_perecentage">
                         
-                        <div class="skill_level" style="width: 50%"></div>
+                        <div class="skill_level" style="width: ${progress}%"></div>
+                        
                       </div>
+                      <p class="progress-label"> ${current_orders} / ${total_required} </p> 
                     </div>
-                    <p style="float:right; margin-left: 80%; font-size: 12px; margin-bottom: 50%"></p>
+                    
                   
-
+                    
               </div>
           </div>
       
       `;
     }
-}
+
 
 // --------------------------------------------------------------------------------------------------//
-var trending_listings = document.getElementById("recommended_cards");
+var recommended_listings = document.getElementById("recommended_cards");
 var counter = 0
 for(i=4; i < 12; i++){
+    var item_id = all_products[i].id;
+    console.log(item_details);
+    if(item_details.length !== 0 && item_id in item_details){
+      var progress =  (item_details[item_id][current_orders] / item_details[item_id][total_required])*100
+      var current_orders = item_details[item_id][current_orders];
+      var total_required = item_details[item_id][total_required];
+    }
+    else{
+      var progress = 0
+      var current_orders = 0
+      var total_required = 0
+    }
+    
     counter += 1
-    trending_listings.innerHTML += `
+    recommended_listings.innerHTML += `
     
         <div class="col-sm-12 col-md-6 col-lg-3">
             <div class="card mx-auto" style="width: 18rem; height: 30rem; margin-top: 20px;">
@@ -168,15 +196,18 @@ for(i=4; i < 12; i++){
                 <div class="skillbar">
                     
                     <div class="skill_perecentage">
-                    <p></p>
-                    <div class="skill_level" style="width: 50%"></div>
+
+                      <div class="skill_level" style="width: ${progress}%"></div>
+                      
                     </div>
+                    <p class="progress-label"> ${current_orders} / ${total_required} </p> 
                 </div>
 
             </div>
         </div>
     
     `;
+  }
 }
 
 function countdown() {

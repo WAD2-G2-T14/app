@@ -5,6 +5,30 @@ html, body{
     height: 100%;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
+
+  .headerimage{
+    display: inline-block;
+    overflow: hidden;
+    /* border: 1px solid black; */
+  }
+
+  .headerimage img{
+    display: block;
+    transition: transform .4s; 
+    /* -moz-transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s; */
+    /* transition: 0.4s; */
+
+  }
+
+  .headerimage:hover img{
+    transform: scale(1.1); 
+    transform-origin: 50% 50%;
+    /* -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1); */
+  }
   
   .headerimage > h1{
       color: white;
@@ -12,8 +36,7 @@ html, body{
       /* 
       padding-top: 15%;
       margin-right: 50%; */
-      /* position: relative; */
-      
+      /* position: relative; */   
   }
   
   
@@ -108,6 +131,9 @@ html, body{
     color: white;
     font-size: 15px;
   }
+  a:link:hover{
+    color: #FED143;
+  }
   
   
   /* TIMER */
@@ -174,9 +200,9 @@ html, body{
   /* progress bar */ 
   .skillbar {
     box-sizing: border-box;
-    width: 70%;
-    margin-left: 5%;
-    margin-top: 15%;
+    width: 88%;
+    margin-left: 6%;
+    margin-top: 13%;
   }
   
   .skillbar p {
@@ -188,9 +214,8 @@ html, body{
     float: right;
     /* position: relative; */
     margin-bottom: 50%;
-    font-size: 12px;
+    font-size: 10px;
     /* margin-left: 70%; */
-    
   }
   
   
@@ -214,13 +239,17 @@ html, body{
     height: 10px;
     border-radius: 6px;
   }
+
+  .progress-label {
+    float: right;
+    margin-left: 1em;
+  }
   
   
   /* About Us */
   .about {
     position: relative;
   }
-  
   
   .box{
     position: absolute;
@@ -296,12 +325,13 @@ html, body{
     background: #E1306C;
   }
   
-.headerimage:hover{
+/* .headerimage:hover{
 	-webkit-transform: scale(1.2);
 	transform: scale(1.03);
   transition: .4s ease-in;
   transition: .4s ease-out;
 }
+ */
 
 .wrapper{
   padding: 2%;
