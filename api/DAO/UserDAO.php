@@ -80,6 +80,26 @@ class UserDAO {
         }
     }
 
+    public function getAllCreditCards($user_id) {
+        $database = new ConnectionManager();
+        $pdo = $database->connect();
+
+        $sql = "
+            SELECT *
+            FROM user_credit_cards
+            WHERE user_id = :user_id
+        ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $row = $stmt->fetchAll();
+            return $row;
+        }
+    }
+
     public function validateEmail($email) {
         $database = new ConnectionManager();
         $pdo = $database->connect();
