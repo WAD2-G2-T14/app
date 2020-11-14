@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supreme Leader's Shopping API Documentation</title>
+</head>
+
+<style>
+  body {
+    width: 80%;
+    margin: auto;
+    font-family: Roboto, Helvetica, sans-serif;
+  }
+
+  .container {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 1em;
+    margin-bottom: 1em;
+  }
+
+  .endpoint {
+    border-bottom: 1px solid black;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+  }
+
+  .GET {
+    color: white;
+    border-radius: 10px;
+    padding: 0.5em;
+    background-color: green;
+  }
+
+  .POST {
+    color: white;
+    border-radius: 10px;
+    padding: 0.5em;
+    background-color: orange;
+  }
+
+  .DELETE {
+    color: white;
+    border-radius: 10px;
+    padding: 0.5em;
+    background-color: red;
+  }
+</style>
+
+<body>
+  <h1>Supreme Leader's Shopping API Documentation</h1>
+
+  <div class='container'>
+    <h2>Authentication</h2>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='POST'>POST</span>
+        /api/auth/login.php
+      </h4>
+
+      <p>
+        This api handles user logins and returns the user id and details if successfully verified.
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>username*</li>
+        <li>password*</li>
+      </ul>
+
+      <mark>Response Example</mark>
+      <ul>
+        <li>"name": "Jonathan Tan Jia Wei"</li>
+        <li>"phone": "91234567"</li>
+        <li>"user_id": "5fa40d29e57d4"</li>
+        <li>"email": "jonathan@mail.com"</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='POST'>POST</span>
+        /api/auth/signup.php
+      </h4>
+
+      <p>
+        This api handles user signups.
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>email*</li>
+        <li>password*</li>
+        <li>name*</li>
+        <li>postal_code*</li>
+        <li>address*</li>
+        <li>city*</li>
+        <li>country*</li>
+        <li>phone_number*</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class='container'>
+    <h2>Items</h2>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='GET'>GET</span>
+        /api/items/all.php
+      </h4>
+
+      <p>
+        This api returns the expiry and order status for all items
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>none</li>
+      </ul>
+
+      <mark>Response Example</mark>
+      <ul>
+        <li>"01351492" :</li>
+        <ul>
+          <li>"current_orders" : 5</li>
+          <li>"total_required" : 10</li>
+          <li>"expiry" : "2020-12-25"</li>
+        </ul>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='GET'>GET</span>
+        /api/items/show_one.php
+      </h4>
+
+      <p>
+        This api returns the expiry and order status for one item
+      </p>
+
+      <mark>URL Params</mark>
+      <ul>
+        <li>item_id=01351492</li>
+      </ul>
+
+      <mark>Response Example</mark>
+      <ul>
+        <li>"current_orders" : 5</li>
+        <li>"total_required" : 10</li>
+        <li>"expiry" : "2020-12-25"</li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>
+        <span class='POST'>PUT</span>
+        /api/items/order.php
+      </h4>
+
+      <p>
+        This api handles the ordering logic and accepts the user's cart details
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>"user_id": "01351492"</li>
+        <li>"item_list": (array)</li>
+        <ul>
+          <li>"0" => </li>
+          <li>"item_id": "01351491"</li>
+          <li>"quantity" "1"</li>
+          <li>"1" => </li>
+          <li>"item_id": "01351492"</li>
+          <li>"quantity": "2"</li>
+          <li>...</li>
+        </ul>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>
