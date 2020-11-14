@@ -149,5 +149,23 @@ class UserDAO {
             return FALSE;
         }
     }
+
+    public function setNewAddress($userDetails) {
+        $database = new ConnectionManager();
+        $pdo = $database->connect();
+
+        $sql = "INSERT INTO user_addresses VALUES (:user_id, :postal_code, :city, :user_address, :country);";
+        var_dump($userDetails);
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $userDetails['user_id'], PDO::PARAM_STR);
+        $stmt->bindParam(':postal_code', $userDetails['postal_code'], PDO::PARAM_STR);
+        $stmt->bindParam(':city', $userDetails['city'], PDO::PARAM_STR);
+        $stmt->bindParam(':user_address', $userDetails['user_address'], PDO::PARAM_STR);
+        $stmt->bindParam(':country', $userDetails['country'], PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            return TRUE;
+        }
+    }
 }
 ?>
