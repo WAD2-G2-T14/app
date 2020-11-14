@@ -60,6 +60,46 @@ class UserDAO {
         }
     }
 
+    public function getAllAddress($user_id) {
+        $database = new ConnectionManager();
+        $pdo = $database->connect();
+
+        $sql = "
+        SELECT *
+        FROM user_addresses
+        WHERE user_id = :user_id
+        ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $row = $stmt->fetchAll();
+            return $row;
+        }
+    }
+
+    public function getAllCreditCards($user_id) {
+        $database = new ConnectionManager();
+        $pdo = $database->connect();
+
+        $sql = "
+            SELECT *
+            FROM user_credit_cards
+            WHERE user_id = :user_id
+        ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $row = $stmt->fetchAll();
+            return $row;
+        }
+    }
+
     public function validateEmail($email) {
         $database = new ConnectionManager();
         $pdo = $database->connect();
@@ -107,6 +147,42 @@ class UserDAO {
             return TRUE;
         } else {
             return FALSE;
+        }
+    }
+
+    public function setNewAddress($userDetails) {
+        $database = new ConnectionManager();
+        $pdo = $database->connect();
+
+        $sql = "INSERT INTO user_addresses VALUES (:user_id, :postal_code, :city, :user_address, :country);";
+        var_dump($userDetails);
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $userDetails['user_id'], PDO::PARAM_STR);
+        $stmt->bindParam(':postal_code', $userDetails['postal_code'], PDO::PARAM_STR);
+        $stmt->bindParam(':city', $userDetails['city'], PDO::PARAM_STR);
+        $stmt->bindParam(':user_address', $userDetails['user_address'], PDO::PARAM_STR);
+        $stmt->bindParam(':country', $userDetails['country'], PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            return TRUE;
+        }
+    }
+
+    public function setNewCreditCard($userDetails) {
+        $database = new ConnectionManager();
+        $pdo = $database->connect();
+
+        $sql = "INSERT INTO user_credit_cards VALUES (:user_id, :card_number, :cardholder_name, :expiry, :cvv_number);";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $userDetails['user_id'], PDO::PARAM_STR);
+        $stmt->bindParam(':card_number', $userDetails['card_number'], PDO::PARAM_STR);
+        $stmt->bindParam(':cardholder_name', $userDetails['cardholder_name'], PDO::PARAM_STR);
+        $stmt->bindParam(':expiry', $userDetails['expiry'], PDO::PARAM_STR);
+        $stmt->bindParam(':cvv_number', $userDetails['cvv_number'], PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            return TRUE;
         }
     }
 }
