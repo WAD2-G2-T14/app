@@ -167,5 +167,23 @@ class UserDAO {
             return TRUE;
         }
     }
+
+    public function setNewCreditCard($userDetails) {
+        $database = new ConnectionManager();
+        $pdo = $database->connect();
+
+        $sql = "INSERT INTO user_credit_cards VALUES (:user_id, :card_number, :cardholder_name, :expiry, :cvv_number);";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $userDetails['user_id'], PDO::PARAM_STR);
+        $stmt->bindParam(':card_number', $userDetails['card_number'], PDO::PARAM_STR);
+        $stmt->bindParam(':cardholder_name', $userDetails['cardholder_name'], PDO::PARAM_STR);
+        $stmt->bindParam(':expiry', $userDetails['expiry'], PDO::PARAM_STR);
+        $stmt->bindParam(':cvv_number', $userDetails['cvv_number'], PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            return TRUE;
+        }
+    }
 }
 ?>
