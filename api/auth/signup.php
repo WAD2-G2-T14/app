@@ -45,7 +45,6 @@ function GetErrorMessages($postBody, $dao) {
 }
 
 $error_arr = GetErrorMessages($postBody, $dao);
-var_dump($error_arr);
 
 if (count($error_arr) === 0 ) {
     $userDetails = [];
