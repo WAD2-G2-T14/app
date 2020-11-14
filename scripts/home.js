@@ -6,7 +6,7 @@ fetch('api/items/all.php')
   console.log("Error detected")
 })
 
-
+// console.log(item_details);
 const data = null;
 const xhr = new XMLHttpRequest();
 xhr.withCredentials = false;
@@ -44,15 +44,15 @@ function display(all_products){
     // console.log(item_details);
 
     if(item_details.length !== 0 && item_id in item_details){
-      var progress =  (item_details[item_id][current_orders] / item_details[item_id][total_required])*100
-      var current_orders = item_details[item_id][current_orders];
-      var total_required = item_details[item_id][total_required];
+      var progress =  (item_details[item_id]['current_orders'] / item_details[item_id]['total_required'])*100;
+      var current_orders = item_details[item_id]['current_orders'];
+      var total_required = item_details[item_id]['total_required'];
 
     }
     else{
       var progress = 0
       var current_orders = 0
-      var total_required = 0
+      var total_required = 10
     }
 
     
@@ -109,12 +109,12 @@ function display(all_products){
                   
                     <div class="skillbar">
                       
-                      <div class="skill_perecentage">
+                      <div class="skill_percentage">
                         
                         <div class="skill_level" style="width: ${progress}%"></div>
                         
                       </div>
-                      <p class="progress-label"> ${current_orders} / ${total_required} </p> 
+                      <p class="progress-label"> ${current_orders} / ${total_required} Orders </p> 
                     </div>
                     
                   
@@ -133,14 +133,14 @@ for(i=4; i < 12; i++){
     var item_id = all_products[i].id;
     console.log(item_details);
     if(item_details.length !== 0 && item_id in item_details){
-      var progress =  (item_details[item_id][current_orders] / item_details[item_id][total_required])*100
-      var current_orders = item_details[item_id][current_orders];
-      var total_required = item_details[item_id][total_required];
+      var progress =  (item_details[item_id]['current_orders'] / item_details[item_id]['total_required'])*100
+      var current_orders = item_details[item_id]['current_orders'];
+      var total_required = item_details[item_id]['total_required'];
     }
     else{
       var progress = 0
       var current_orders = 0
-      var total_required = 0
+      var total_required = 10
     }
     
     counter += 1
@@ -195,12 +195,12 @@ for(i=4; i < 12; i++){
 
                 <div class="skillbar">
                     
-                    <div class="skill_perecentage">
+                    <div class="skill_percentage">
 
                       <div class="skill_level" style="width: ${progress}%"></div>
-                      
+
                     </div>
-                    <p class="progress-label"> ${current_orders} / ${total_required} </p> 
+                    <p class="progress-label"> ${current_orders} / ${total_required} Orders </p> 
                 </div>
 
             </div>
@@ -250,3 +250,7 @@ function countdown() {
 countdown();
 
 setInterval(countdown, 1000);
+
+// function sickbtn(){
+
+// }
