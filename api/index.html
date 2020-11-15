@@ -188,6 +188,30 @@
     <div class='endpoint'>
       <h4>
         <span class='GET'>GET</span>
+        /api/user/details.php
+      </h4>
+      
+      <p>
+        This api will return the user's details
+      </p>
+
+      <mark>URL Params</mark>
+      <ul>
+        <li>user_id=01351492</li>
+      </ul>
+
+      <mark>Example Response</mark>
+      <ul>
+        <li>"user_id": "01351492"</li>
+        <li>"name": "Jonathan Tan Jia Wei"</li>
+        <li>"email": "jonathan@mail.com"</li>
+        <li>"phone": "96389868"</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='GET'>GET</span>
         /api/user/address_all.php
       </h4>
       
@@ -294,8 +318,44 @@
         <li>user_id*</li>
         <li>card_number*</li>
         <li>cardholder_name*</li>
-        <li>expiry* (YY/MM)</li>
+        <li>expiry* (MM/YY)</li>
         <li>cvv_number*</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='POST'>POST</span>
+        /api/user/edit.php
+      </h4>
+      
+      <p>
+        This api will edit the user's name or email address
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>user_id*</li>
+        <li>fullname*</li>
+        <li>email*</li>
+      </ul>
+    </div>
+
+    <div class='endpoint'>
+      <h4>
+        <span class='DELETE'>DELETE</span>
+        /api/user/delete_address.php
+      </h4>
+      
+      <p>
+        This api will delete a specified address
+      </p>
+
+      <mark>Payload</mark>
+      <ul>
+        <li>user_id*</li>
+        <li>postal_code*</li>
+        <li>city*</li>
       </ul>
     </div>
   </div>

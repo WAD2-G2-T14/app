@@ -155,7 +155,7 @@ class UserDAO {
         $pdo = $database->connect();
 
         $sql = "INSERT INTO user_addresses VALUES (:user_id, :postal_code, :city, :user_address, :country);";
-        var_dump($userDetails);
+
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':user_id', $userDetails['user_id'], PDO::PARAM_STR);
         $stmt->bindParam(':postal_code', $userDetails['postal_code'], PDO::PARAM_STR);
@@ -180,6 +180,45 @@ class UserDAO {
         $stmt->bindParam(':cardholder_name', $userDetails['cardholder_name'], PDO::PARAM_STR);
         $stmt->bindParam(':expiry', $userDetails['expiry'], PDO::PARAM_STR);
         $stmt->bindParam(':cvv_number', $userDetails['cvv_number'], PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            return TRUE;
+        }
+    }
+
+    public function updateDetails($user_id, $fullname, $email) {
+        $database = new ConnectionManager();
+        $pdo = $database->connect();
+
+        $sql = "
+            UPDATE users
+            SET fullname = :fullname, email = :email
+            WHERE user_id = :user_id
+        ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':fullname', $fullname, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            return TRUE;
+        }
+    }
+
+    public function deleteAddress($user_id, $postal_code, $city) {
+        $database = new ConnectionManager();
+        $pdo = $database->connect();
+
+        $sql = "
+            DELETE FROM user_addresses
+            WHERE user_id = :user_id AND postal_code = :postal_code AND city = :city
+        ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindParam(':postal_code', $postal_code, PDO::PARAM_STR);
+        $stmt->bindParam(':city', $city, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             return TRUE;
