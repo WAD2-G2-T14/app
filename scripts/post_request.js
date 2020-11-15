@@ -5,7 +5,7 @@
         let password = document.getElementById('password').value; //password
         // e.preventDefault();
 
-        fetch("Shopping-Club-7-login-signup-functionality/api/auth/login.php", {
+        fetch("../api/auth/login.php", {
             method:'POST',
             headers: {
             'Accept': 'application/json',
@@ -61,7 +61,7 @@
         console.log(password);
         // e.preventDefault();
         
-        fetch("Shopping-Club-7-login-signup-functionality/api/auth/signup.php", {
+        fetch("../api/auth/signup.php", {
             method:'POST',
             headers: {
             'Accept': 'application/json',
