@@ -29,7 +29,8 @@ xhr.send(data);
 //function for creating coookie!
 function push(p_id){
   //console.log('entering function push');
-  document.cookie = p_id;
+  var cookie = document.cookie;
+  cookie['product_id'] = p_id;
   //console.log(document.cookie);
   window.location.href ='listing_page.html';
 }
@@ -152,7 +153,7 @@ for(i=4; i < 12; i++){
     recommended_listings.innerHTML += `
     
         <div class="col-sm-12 col-md-6 col-lg-3">
-            <div class="card mx-auto" style="width: 18rem; height: 30rem; margin-top: 20px;">
+            <div class="card mx-auto" onclick="push(${all_products[i].id})" style="width: 18rem; height: 30rem; margin-top: 20px;">
                 <img src='http://${all_products[i].imageUrl}' class="card-img-top" alt="...">
                 
                 <div class="item-time">

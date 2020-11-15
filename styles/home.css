@@ -6,6 +6,8 @@ html, body{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
 
+  
+/* header */
   .headerimage{
     display: inline-block;
     overflow: hidden;
@@ -317,7 +319,7 @@ html, body{
   transition: .4s ease-out;
 }
  */
-
+/* 
 .wrapper{
   padding: 2%;
-}
+} */
