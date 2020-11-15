@@ -13,7 +13,7 @@ var cookie = {
         {
             "product_id": "20622707",
             "name": "Based London Forged Boots with Waxy Faux Leather",
-            "quantity": "2"
+            "quantity": "1"
         },
     ],
         "product_id": "01351491"
