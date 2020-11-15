@@ -224,5 +224,23 @@ class UserDAO {
             return TRUE;
         }
     }
+
+    public function deleteCreditCard($user_id, $card_number) {
+        $database = new ConnectionManager();
+        $pdo = $database->connect();
+
+        $sql = "
+            DELETE FROM user_credit_cards
+            WHERE user_id = :user_id AND card_number = :card_number
+        ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindParam(':card_number', $card_number, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            return TRUE;
+        }
+    }
 }
 ?>
