@@ -48,6 +48,7 @@ html, body{
     right: 19px;
   }
   
+
   .container > p{
       text-decoration: underline;
   }
@@ -66,7 +67,34 @@ html, body{
       box-shadow: 0 7px 15px rgba(0, 0, 0, 0.3);
       transition: all 0.6s;
   }
+
+  .empty-card-title{ /*omo don't need the p here */
+    font-size: 30px;
+    font-weight: 100px;
+    padding: 5%;    
+  } 
+
+
+  .arrow {
+    border: solid black;
+    border-width: 0 10px 10px 0;
+    display: inline-block;
+    padding: 15px;
+
+    position: absolute;
+    bottom: 30px;
+    right: 35px;
+  }
+
+  .SeeMore:hover{
+    background-color: #FED143;
+  }
+
   
+  .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
   
   /* footer stuff */
   footer{
@@ -208,10 +236,11 @@ html, body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    /* opacity: 0.6 */
   }
 
   .about > img{
-    opacity: 0.5;
+    opacity: 0.7;
   }
   
   

@@ -34,6 +34,11 @@ function push(p_id){
   window.location.href ='listing_page.html';
 }
 
+// function sickbtn(){
+//   <a href="#aboutus-section"></a>
+// }
+
+
 function display(all_products){
   var trending_listings = document.getElementById("trending_cards");
   
@@ -143,7 +148,7 @@ for(i=4; i < 12; i++){
       var total_required = 10
     }
     
-    counter += 1
+    if(i != 11){
     recommended_listings.innerHTML += `
     
         <div class="col-sm-12 col-md-6 col-lg-3">
@@ -208,13 +213,31 @@ for(i=4; i < 12; i++){
     
     `;
   }
+
+  else{
+    recommended_listings.innerHTML += `
+    <div class="col-sm-12 col-md-6 col-lg-3">
+      <div class="SeeMore card mx-auto" onclick="SeeMore()" style="position: relative; width: 18rem; height: 30rem; margin-top: 20px;">
+        <b class="empty-card-title">SEE ALL NEW ARRIVALS</b>  
+        <p><i class="arrow right"></i></p>                          
+      </div>
+    </div>
+    `;
+    }
+  }
 }
+
+
+function SeeMore(){
+  window.location.href ='pages/all_products.html';
+}
+
 
 function countdown() {
 
     var formatTime = (time) => (time < 10 ? `0${time}` : time);
 
-    for (let i=0; i<12; i++) {
+    for (let i=0; i<11; i++) {
         var remDays = document.getElementById(`days_${i}`);
         var remHours = document.getElementById(`hours_${i}`);
         var remMinutes = document.getElementById(`minutes_${i}`);
