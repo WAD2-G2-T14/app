@@ -15,6 +15,95 @@
 
 // }
 
+function bind_api(){
+    call_api();
+    
+}
+
+function api_database(){
+    var cookie_id = document.cookie;
+    var request = new XMLHttpRequest();
+    request.onreadystatechange=function(){
+        if(this.readyState ==4 && this.status ==200){
+            //request!
+            //console.log(this.responseText);
+            var response_json = JSON.parse(this.responseText);
+            console.log(response_json); //response from database on item
+            //occupied(response_json);
+            var response = response_json;
+            var current_orders = response.current_orders;
+            var total_required = response.total_required;
+            var expiry = response.expiry;
+            var progress =  (current_orders / total_required)*100;
+            console.log('in occupied for progress');
+            var occupied = document.getElementById('occupied');
+            var timer = document.getElementById('timer');
+            var date = document.getElementById('date');
+            date.innerHTML= expiry;
+            console.log(occupied);
+            occupied.innerHTML = `
+            
+            
+            <div class="skill_percentage" style='margin-top:10px; margin-bottom:0px;'>
+              
+              <div class="skill_level" style="width: ${progress}%; "></div>
+              
+            </div>
+            <p class="progress-label" > ${current_orders} / ${total_required} </p> 
+        
+            `;
+
+            timer.innerHTML =`
+            <div class="count-down-container" style='margin-bottom:10px;' >
+        
+            <div class="count-down-box">
+            <div class="count-down">
+                <h1 id="days_{i}">00</h1>
+                <p>Days</p>
+            </div>
+            </div>
+    
+            <div class="count-down-box">
+            <div class="count-down">
+                <h1 id="hours_{i}">00</h1>
+                <p>Hours</p>
+            </div>
+            </div>
+    
+            <div class="count-down-box">
+            <div class="count-down">
+                <h1 id="minutes_{i}">00</h1>
+                <p>Minutes</p>
+            </div>
+            </div>
+    
+            <div class="count-down-box">
+            <div class="count-down">
+                <h1 id="seconds_{i}">00</h1>
+                <p>Seconds</p>
+            </div>
+            </div>
+    
+    
+      
+            </div>
+            `;
+
+
+
+
+
+        }
+    }
+    var url =`../api/items/show_one.php?item_id=20622707`;
+    request.open('GET', url,true);
+    request.send();
+}
+
+
+
+
+
 function call_api(){
     //console.log(document.cookie);
     var cookie_id = document.cookie;
@@ -28,14 +117,14 @@ function call_api(){
             //console.log(this.responseText);
             var response_json = JSON.parse(this.responseText);
             createProduct(response_json);
-            console.log(response_json);
+            //console.log(response_json);
             //console.log(response_json.alternateNames[0].title);
         }
     });
     
     xhr.open("GET", `https://asos2.p.rapidapi.com/products/v3/detail?store=US&sizeSchema=US&lang=en-US&currency=USD&id=20622707`);
     xhr.setRequestHeader("x-rapidapi-host", "asos2.p.rapidapi.com");
-    xhr.setRequestHeader("x-rapidapi-key", "254a1a4b39msh0055d7e48bce68dp185c92jsn919b8e0e8c9c");
+    xhr.setRequestHeader("x-rapidapi-key", "9fd2e4fe08mshaebad2c1add2ab1p1ae36djsnebc50a98407d");
     
     xhr.send(data);
 }
@@ -108,20 +197,13 @@ function createProduct(response){
     btm_img.innerHTML = btm_str;
     
  
-
-
-
-
-
-
-
-
-
     var title = response.alternateNames[0].title; // title from response
 
     var name = document.getElementById('prodname');
     //console.log(name);
     var details = `
+    <div id='timer'></div>
+
     <h3 class ='title'>${title}</h3> 
     <h5 id='price'><b> SGD ${price}</b></h5>
     
@@ -152,7 +234,7 @@ function createProduct(response){
 
                 <tr>
                     <td class ='description' >Standard delivery</td>
-                    <td></td>
+                    <td id ='date' style='font-size: 13px;'></td>
                     <td> $12.01 <br> FREE - spend over SGD$65.00</td>
                 </tr>
             
@@ -161,33 +243,36 @@ function createProduct(response){
             </table>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
         </div>
+
         </div>
     </div>
     </div>
 
-    <br><br>
-    <small class ='wordspace' style='font-weight:700; font-size:14px; margin-bottom:30px;'>SIZE: </small>
+    <div id='occupied' ></div>
+
+   
+    
+    <p class ='wordspace' style='font-weight:700; font-size:14px; margin-top:30px; margin-bottom:0px;'>SIZE: </p>
     <select id='size_selected' class="form-control form-control-sm" style= 'height: 40px;'>
         <option>Please select</option>
     
     `;
 
     for (var size of sizesAvail){
-        console.log(size);
+        //console.log(size);
         details +=`
         <option>${size}</option>
         `;
     }
+    //change hardcode here!! (p_id)
     details +=`
     </select>
     <br>
     <small class ='wordspace' style='font-weight:700; font-size:14px; margin-bottom:30px;'>QUANTITY: </small>
     <input min='0' type="number" id="quantity" class="form-control" aria-label="Quantity" aria-describedby="basic-addon3">
-        <div class="container text-center white-text py-5">
-        <button class="cartBtn mask rgba-black-strong d-flex align-items-center h-100" onclick='redirect(20622707)'><span>Add to Cart</span></button>
+        <div class="container text-center white-text py-3">
+        <button class="cartBtn mask rgba-black-strong d-flex align-items-center h-100 mt-3" onclick='redirect(20622707)'><span>Add to Cart</span></button>
         </div>
 
 
@@ -215,40 +300,90 @@ function createProduct(response){
     p_fit = document.getElementById('p_fit');
     p_fit.innerHTML = response.info.sizeAndFit;
 
+  
+    api_database();
+
 }
 
 
 
-document.cookie= JSON.stringify (
-    {
-        'cart' : [
-            {
-                'product_id' : p_id,
-                'quantity' : ''
-            }
-        ]
-    }
-)
-console.log(document.cookie);
+// document.cookie= JSON.stringify (
+//     {
+//         'cart' : [
+//             {
+//                 'product_id' : p_id,
+//                 'quantity' : ''
+//             }
+//         ]
+//     }
+// )
+// console.log(document.cookie);
+
+
+
+// //OBJECT COOKIE STORED FORMAT
+
+// {
+//     'cart' : [
+//         {
+//             'product_id' : '01351492',
+//             'product_quantity' : '2'
+//             'product_size' : 'XL'
+//         }
+//     ]
+// }
+
+//function (input p_id)
+//declare false bool
+//loop through each iteration
+//check if cart.length =0
+//if successful bool == same pid and same size == bool =true
+//add size
+
 
 
 function redirect(p_id){
+    //add to cart
     console.log('entering redirect!');
-    console.log(p_id);
+    
+    
+    // //view user's cart
+    // var cart = cookie.cart;
+    // console.log(p_id);
     var qty = document.getElementById('quantity').value;
     var size = document.getElementById('size_selected').value;
-    //console.log(qty);
-    //console.log(size);
-    // var obj = {
-    //     'cart' : [
-    //         {
-    //             'product_id' : `${p_id}`,
-    //             'quantity' : `${qty}`
-    //         }
-    //     ]  };
+    var p_id = p_id; //product id user was looking at
+    // console.log(size); //WORKS! HALLELUJAH
+    // console.log(qty); //WORKS! HALLELUJAH
     
-    //console.log(document.cookie);
-    //window.location.href ='checkout.html';
+
+    //validation for cart details
+    var cookie = document.cookie;
+    cookie = JSON.parse(cookie); //object cookie as json stores string
+     
+    //put into cookie
+    var cart = cookie.cart; // cart object
+    var check = false;
+    if (cart.length != 0){ //if cart is not empty
+        for (item in cart){
+            var product_id = item.product_id;
+            var product_quantity = item.product_quantity;
+            var product_size = item.product_size;
+            if (product_id == p_id && product_size == size){
+                product_quantity+=1;
+                check = true;
+                break;
+            }
+        }
+    }
+    if (check ==false){
+        cart.push({
+            'product_id' : `${p_id}`,
+            'product_quantity' : `${qty}`,
+            'product_size' : `${p_id}`
+        })
+    }
+   
 }
 
 
