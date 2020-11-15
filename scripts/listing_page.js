@@ -218,27 +218,24 @@ function createProduct(response){
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content modalcontent">
-        <div class="modal-header " style="background-color: #FED143">
+        <div class="modal-header ">
             <h5 class="modal-title " id="exampleModalLabel"><b>SHIPPING OPTIONS</b></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body" style="text-align:center; font-weight:10px;">
-            <table class>
-                <tr>
-                    DELIVER TO <img src="../images/singapore.svg"> SINGAPORE
-                </tr>
+        <div class="modal-body">
+            <table class ='table text-center' >
                 <tr>
                     <th>TYPE</th>
-                    <th>WHEN?</th>
-                    <th>HOW MUCH?</th>
+                    <th>WHEN</th>
+                    <th>HOW MUCH</th>
                 </tr>
 
                 <tr>
                     <td class ='description' >Standard delivery</td>
                     <td id ='date' style='font-size: 13px;'></td>
-                    <td class='price'> $12.01 <br> FREE - spend over SGD$65.00</td>
+                    <td> $12.01 <br> FREE - spend over SGD$65.00</td>
                 </tr>
             
             
