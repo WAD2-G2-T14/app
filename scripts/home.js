@@ -20,9 +20,9 @@ xhr.addEventListener("readystatechange", function () {
   }
 });
 
-xhr.open("GET", "https://asos2.p.rapidapi.com/products/v2/list?country=US&currency=USD&sort=freshness&lang=en-US&sizeSchema=US&offset=0&categoryId=4209&limit=48&store=US");
+xhr.open("GET", "https://asos2.p.rapidapi.com/products/v2/list?offset=0&categoryId=4209&limit=48&store=US&country=US&currency=USD&sort=freshness&lang=en-US&sizeSchema=US");
 xhr.setRequestHeader("x-rapidapi-host", "asos2.p.rapidapi.com");
-xhr.setRequestHeader("x-rapidapi-key", "438acc3e60msh4ab92755245ec91p11a85fjsnd44149a8b159");
+xhr.setRequestHeader("x-rapidapi-key", "7626da75e9msh156d2ae86669dbbp1ba489jsn9ba04a4b7ede");
 
 xhr.send(data);
 
@@ -234,7 +234,7 @@ function SeeMore(){
 }
 
 
-function countdown() {
+function countdown(all_products) {
 
     var formatTime = (time) => (time < 10 ? `0${time}` : time);
 
@@ -271,7 +271,7 @@ function countdown() {
 };
 
 // initial call
-countdown();
+countdown(all_products);
 
 setInterval(countdown, 1000);
 
