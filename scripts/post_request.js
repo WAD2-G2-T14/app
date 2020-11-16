@@ -27,6 +27,7 @@
                 var user_id = json["user_id"];
                 var email = json["email"];
 
+                document.cookie = '; path=/'
                 document.cookie = JSON.stringify({
                     "user_details": {
                         "id": user_id,
