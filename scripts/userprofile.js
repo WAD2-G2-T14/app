@@ -1,5 +1,6 @@
 var cookie = JSON.parse(document.cookie)
 var user_id = cookie['user_details']['id']
+console.log(user_id)
 
 function display_default(){
     var sidebarContainer = document.getElementsByClassName("sidebar");
@@ -27,10 +28,9 @@ function retrieve_my_details(){
     .then(response => response.json())
     .then(json => {
         console.log(json);
-            var user_id = json.user_id;
-            var my_details_name = json.name;
-            var my_details_email = json.email;
-            var my_details_phone = json.phone;
+            var my_details_name = json['name'];
+            var my_details_email = json['email'];
+            var my_details_phone = json['phone'];
             
             document.getElementById("my_details_fullname").setAttribute("value", my_details_name);
             document.getElementById("my_details_fullname").setAttribute("placeholder", my_details_name);
@@ -186,7 +186,7 @@ function new_password_page(){
 function retrieve_current_password(){
     console.log("inside retrieve_current_password function");
 
-    fetch("../api/user/details.php?user_id=${user_id}")
+    fetch(`../api/user/details.php?user_id=${user_id}`)
     .then(response => response.json())
     .then(json => {
         // console.log(json);
@@ -373,7 +373,7 @@ function post_add_address(){
 function display_saved_address(){
     // console.log("inside display_saved_address function");
 
-    fetch("../api/user/address_all.php?user_id=${user_id}")
+    fetch(`../api/user/address_all.php?user_id=${user_id}`)
     .then(response => response.json())
     .then(json => {
         // console.log(json);
@@ -419,7 +419,6 @@ function display_saved_address(){
 
 //DELE ADDRESS FROM DB
 function delete_saved_address(postal_code, city, user_id){
-    console.log(postal_code, city, user_id);
     console.log("inside delete_saved_address function");
 
     fetch("../api/user/delete_address.php", {
@@ -553,11 +552,11 @@ function display_saved_card(){
             // console.log("inside else statement of display saved class");
             document.getElementById("no_cards_yet").innerHTML = "";
             for(each_card of json){
-                var user_id = each_card.user_id;
-                var card_number = each_card.card_number;
-                var cardholder_name = each_card.cardholder_name;
-                var expiry = each_card.expiry;
-                var cvv_number = each_card.cvv_number;
+                var user_id = each_card['user_id'];
+                var card_number = each_card['card_number'];
+                var cardholder_name = each_card['cardholder_name'];
+                var expiry = each_card['expiry'];
+                var cvv_number = each_card['cvv_number'];
                 
                 document.getElementById("no_cards_yet").innerHTML += `
                 <div class="row">
@@ -585,7 +584,7 @@ function display_saved_card(){
 }
 
 //DELE card FROM DB
-function delete_saved_card(card_number, user_id){
+function delete_saved_card(card_number){
     console.log(card_number, user_id);
     console.log("inside delete_credit_card function");
 
