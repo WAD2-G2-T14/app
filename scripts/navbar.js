@@ -1,10 +1,5 @@
-var cookie = document.cookie;
-cookie['product_id'] = '20622707';
-cookie['cart']={
-    'product_id' : '20622707',
-    'product_quantity':'2',
-    'product_size' :'M'
-}
+var cookie = JSON.parse(document.cookie)
+var cart = cookie.cart
 
 
 function checkOut(){
@@ -12,25 +7,7 @@ function checkOut(){
     window.location.href ='checkout.html';
 }
 
-// var cookie = {
-//     "user_details": {
-//         "id": "013f45b21",
-//         "fullname": "Agurz Tan",
-//         "email": "agurz@mail.com",
-//         "phone": "91234567"
-//     },
-//     "cart": [
-//         {
-//             "product_id": "20622707",
-//             "product_quantity": "2",
-//             "product_size": "M"
-
-//         }
-//     ],
-//     "product_id": "20622707"
-// }
-
-function nav_call_api(p_id, cart_quantity, cart_size){
+function nav_call_api(item_p_id, item_name, item_quantity, item_size, item_price){
     //console.log('entering nav_api');
     var data = null;
     var xhr = new XMLHttpRequest();
@@ -54,13 +31,13 @@ function nav_call_api(p_id, cart_quantity, cart_size){
                 <div class ='row' style ='background-color: rgb(245, 244, 244); padding:10px 0;'>
                     <div class ='col-4'>
                         
-                        <img src="http://images.asos-media.com/products/base-london-forge-lace-up-boots-in-waxy-black-leather/20622707-1-black" style ='width:100%;' alt="..." >
+                        <img src="http://${image}" style ='width:100%;' alt="..." >
                     </div>
                     <div class ='col'>
-                        <p>Base London forge lace up boot in waxy black leather</p>
-                        <p>Size: US 8</p>
-                        <p>Quantity : 2 </p>
-
+                        <p>${item_name}</p>
+                        <p>Size: ${item_size}</p>
+                        <p>Quantity: ${item_quantity}</p>
+                        <p class='font-weight-bold'>${item_price}</p>
                     </div>
                 
                 </div>
@@ -68,7 +45,7 @@ function nav_call_api(p_id, cart_quantity, cart_size){
          }
     });
     // remove HARD CODE!! to p_id in asos link!
-    xhr.open("GET", `https://asos2.p.rapidapi.com/products/v3/detail?store=US&sizeSchema=US&lang=en-US&currency=USD&id=${p_id}`);
+    xhr.open("GET", `https://asos2.p.rapidapi.com/products/v3/detail?store=US&sizeSchema=US&lang=en-US&currency=USD&id=${item_p_id}`);
     xhr.setRequestHeader("x-rapidapi-host", "asos2.p.rapidapi.com");
     xhr.setRequestHeader("x-rapidapi-key", "0592359968mshc6e4654c81accf9p1a722fjsn56d295fe6ca6");
     
@@ -78,26 +55,13 @@ function nav_call_api(p_id, cart_quantity, cart_size){
 
 function nav_createProduct(){
     document.getElementById('cart_items').innerHTML = '';
-    //display cart
-    //console.log(cart_items);
-    // var cookie = document.cookie;
-    // var cart = cookie['cart'];
-    //console.log(cart);
-    // returns array of cart items
-    
-  //  for (one_item of cart){
-        console.log('hi');
-        cart_p_id = '20622707';
-        cart_quantity = 2;
-        cart_size = 'M';
-        nav_call_api(cart_p_id, cart_quantity);
 
-
-  //  }
-
-
-   
-
-
-    
+    for (item of cart){
+        item_p_id = item['product_id'];
+        item_name = item['product_name'];
+        item_quantity = item['product_quantity'];
+        item_size = item['product_size'];
+        item_price = item['product_price'];
+        nav_call_api(item_p_id, item_name, item_quantity, item_size, item_price);
+    }
 }
