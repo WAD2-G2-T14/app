@@ -265,6 +265,9 @@ function createProduct(response){
                 <span>Add to Cart</span>
             </button>
         </div>
+        <div class='text-center'>
+            <span class='text-success mt-3' id='afterOrderStatus'></span>
+        </div>
      `;
 
     name.innerHTML = details;
@@ -342,5 +345,8 @@ function redirect(price){
     document.cookie = JSON.stringify(cookie) + '; path=/'
 
     // Update status
-    
+    const status = document.getElementById('afterOrderStatus')
+    status.innerText = 'Item has been added to cart successfully!'
+
+    setTimeout(() => {status.innerText = ''}, 3000)
 }
