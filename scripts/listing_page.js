@@ -14,6 +14,9 @@
 //     request.send();
 
 // }
+var cookie = JSON.parse(document.cookie)
+var p_id = cookie['product_id']
+var user_id = cookie['user_details']['id']
 
 function direct_home(){
     window.location.href ='userprofile.html';
@@ -21,11 +24,7 @@ function direct_home(){
 
 function bind_api(){
     call_api();
-    
 }
-
-var cookie_id = document.cookie;
-var p_id = cookie_id['product_id'];
 
 function api_database(){
     
@@ -33,119 +32,101 @@ function api_database(){
     request.onreadystatechange=function(){
         if(this.readyState ==4 && this.status ==200){
             //request!
-            console.log(this.responseText);
             var response_json = JSON.parse(this.responseText);
-            console.log(response_json); //response from database on item
-            //occupied(response_json);
+
             var response = response_json;
             var current_orders = response.current_orders;
-            var total_required = response.total_required;
+            var total_required = response.total_required ?? '??';
             var expiry = response.expiry;
-            var progress =  (current_orders / total_required)*100;
-            console.log('in occupied for progress');
+            var progress =  (current_orders / (total_required === '??' ? 1 : total_required)) * 100;
+
             var occupied = document.getElementById('occupied');
             var timer = document.getElementById('timer');
             var date = document.getElementById('date');
             date.innerHTML= expiry;
-            console.log(occupied);
+
             occupied.innerHTML = `
-            
-            
-            <div class="skill_percentage" style='margin-top:10px; margin-bottom:0px;'>
-              
-              <div class="skill_level" style="width: ${progress}%; "></div>
-              
-            </div>
-            <p class="progress-label" > ${current_orders} / ${total_required} </p> 
-        
+                <div class="skill_percentage" style='margin-top:10px; margin-bottom:0px;'>
+
+                    <div class="skill_level" style="width: ${progress}%; "></div>
+
+                </div>
+                <p class="progress-label" > ${current_orders} / ${total_required} </p> 
             `;
 
             timer.innerHTML =`
-            <div class="count-down-container" style='margin-bottom:10px;' >
-        
-            <div class="count-down-box">
-            <div class="count-down">
-                <h1 id="days_{i}">00</h1>
-                <p>Days</p>
-            </div>
-            </div>
-    
-            <div class="count-down-box">
-            <div class="count-down">
-                <h1 id="hours_{i}">00</h1>
-                <p>Hours</p>
-            </div>
-            </div>
-    
-            <div class="count-down-box">
-            <div class="count-down">
-                <h1 id="minutes_{i}">00</h1>
-                <p>Minutes</p>
-            </div>
-            </div>
-    
-            <div class="count-down-box">
-            <div class="count-down">
-                <h1 id="seconds_{i}">00</h1>
-                <p>Seconds</p>
-            </div>
-            </div>
-    
-    
-      
-            </div>
+                <div class="count-down-container" style='margin-bottom:10px;' >
+                    <div class="count-down-box">
+                        <div class="count-down">
+                            <h1 id="days">00</h1>
+                            <p>Days</p>
+                        </div>
+                    </div>
+            
+                    <div class="count-down-box">
+                        <div class="count-down">
+                            <h1 id="hours">00</h1>
+                            <p>Hours</p>
+                        </div>
+                    </div>
+            
+                    <div class="count-down-box">
+                        <div class="count-down">
+                            <h1 id="minutes">00</h1>
+                            <p>Minutes</p>
+                        </div>
+                    </div>
+            
+                    <div class="count-down-box">
+                        <div class="count-down">
+                            <h1 id="seconds">00</h1>
+                            <p>Seconds</p>
+                        </div>
+                    </div>
+                </div>
             `;
-
-
-
-
-
         }
     }
-    var url =`../api/items/show_one.php?item_id=20622707`;
+
+    var url =`../api/items/show_one.php?item_id=${p_id}`;
     request.open('GET', url,true);
     request.send();
 }
 
 
 function checkOut(){
-    console.log('running checkout');
-    window.location.href ='checkout.html';
+    // console.log('running checkout');
+    // window.location.href ='checkout.html';
 }
 
 
-function call_api(p_id){
+function call_api(){
     //console.log(document.cookie);
-    var cookie_id = document.cookie;
     var data = null;
-    var p_id = '20622707';
+
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = false;
     
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
-            //console.log(this.responseText);
             var response_json = JSON.parse(this.responseText);
             createProduct(response_json);
-            console.log(response_json);
-            //console.log(response_json.alternateNames[0].title);
         }
     });
     
-    xhr.open("GET", `https://asos2.p.rapidapi.com/products/v3/detail?store=US&sizeSchema=US&lang=en-US&currency=USD&id=20622707`);
+    xhr.open("GET", `https://asos2.p.rapidapi.com/products/v3/detail?store=US&sizeSchema=US&lang=en-US&currency=USD&id=${p_id}`);
     xhr.setRequestHeader("x-rapidapi-host", "asos2.p.rapidapi.com");
     xhr.setRequestHeader("x-rapidapi-key", "0592359968mshc6e4654c81accf9p1a722fjsn56d295fe6ca6");
     
     xhr.send(data);
 }
 
-function createProduct(response, p_id){
+function createProduct(response){
     //console.log('entering create prod!!'); // pass
     
     var images = response.media.images;
     // get sizes array
     var sizesAvail_arr = response.variants;
-    //console.log(sizesAvail_arr);
     var sizesAvail =[]
     for (var i=0 ; i< sizesAvail_arr.length ; i++){
         //console.log(sizesAvail_arr[i].brandSize);
@@ -153,9 +134,8 @@ function createProduct(response, p_id){
     }
     //console.log(sizesAvail);
 
-    var price = response.price.current.text; //ASSUMPTION: price is in sgd //*do not delete*
-    //console.log(price);
-    //console.log(images);
+    var price = response.price.current.text; //ASSUMPTION: price is in sgd *do not delete*
+
     var btm_img = document.getElementById('bottom_img');
     var str = '';
     var btm_str = '';
@@ -212,61 +192,60 @@ function createProduct(response, p_id){
     var name = document.getElementById('prodname');
     //console.log(name);
     var details = `
-    <div id='timer'></div>
+        <div id='timer'></div>
 
-    <h3 class ='title'>${title}</h3> 
-    <h5 id='price'><b> SGD ${price}</b></h5>
-    
-    
-    
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-white wordspace ml-0" data-toggle="modal" data-target="#exampleModal">
-    <small><u>Free delivery and returns (Ts&Cs Apply)</u></small>
-    </button>
+        <h3 class ='title'>${title}</h3> 
+        <h5 id='price'><b> SGD ${price}</b></h5>
+        
+        
+        
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-white wordspace ml-0" data-toggle="modal" data-target="#exampleModal">
+        <small><u>Free delivery and returns (Ts&Cs Apply)</u></small>
+        </button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content modalcontent">
-        <div class="modal-header ">
-            <h5 class="modal-title " id="exampleModalLabel"><b>SHIPPING OPTIONS</b></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modalcontent">
+            <div class="modal-header ">
+                <h5 class="modal-title " id="exampleModalLabel"><b>SHIPPING OPTIONS</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class ='table text-center' >
+                    <tr>
+                        <th>TYPE</th>
+                        <th>WHEN</th>
+                        <th>HOW MUCH</th>
+                    </tr>
+
+                    <tr>
+                        <td class ='description' >Standard delivery</td>
+                        <td id ='date' style='font-size: 13px;'></td>
+                        <td> $12.01 <br> FREE - spend over SGD$65.00</td>
+                    </tr>
+                
+                
+                
+                </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+
+            </div>
         </div>
-        <div class="modal-body">
-            <table class ='table text-center' >
-                <tr>
-                    <th>TYPE</th>
-                    <th>WHEN</th>
-                    <th>HOW MUCH</th>
-                </tr>
-
-                <tr>
-                    <td class ='description' >Standard delivery</td>
-                    <td id ='date' style='font-size: 13px;'></td>
-                    <td> $12.01 <br> FREE - spend over SGD$65.00</td>
-                </tr>
-            
-            
-            
-            </table>
-        </div>
-        <div class="modal-footer">
         </div>
 
-        </div>
-    </div>
-    </div>
+        <div id='occupied' ></div>
 
-    <div id='occupied' ></div>
-
-   
     
-    <p class ='wordspace' style='font-weight:700; font-size:14px; margin-top:30px; margin-bottom:0px;'>SIZE: </p>
-    <select id='size_selected' class="form-control form-control-sm" style= 'height: 40px;'>
-        <option>Please select</option>
-    
+        
+        <p class ='wordspace' style='font-weight:700; font-size:14px; margin-top:30px; margin-bottom:0px;'>SIZE: </p>
+        <select id='size_selected' class="form-control form-control-sm" style= 'height: 40px;'>
+            <option>Please select</option>
     `;
 
     for (var size of sizesAvail){
@@ -276,17 +255,16 @@ function createProduct(response, p_id){
         `;
     }
     //change hardcode here!! (p_id)
-    details +=`
-    </select>
-    <br>
-    <small class ='wordspace' style='font-weight:700; font-size:14px; margin-bottom:30px;'>QUANTITY: </small>
-    <input min='0' type="number" id="quantity" class="form-control" aria-label="Quantity" aria-describedby="basic-addon3">
+    details += `
+        </select>
+        <br>
+        <small class ='wordspace' style='font-weight:700; font-size:14px; margin-bottom:30px;'>QUANTITY: </small>
+        <input min='0' type="number" id="quantity" class="form-control" aria-label="Quantity" aria-describedby="basic-addon3">
         <div class="container text-center white-text py-3">
-        <button class="cartBtn mask rgba-black-strong d-flex align-items-center h-100 mt-3" onclick='redirect(${p_id})'><span>Add to Cart</span></button>
+            <button class="cartBtn mask rgba-black-strong d-flex align-items-center h-100 mt-3" onclick="redirect('${price}')">
+                <span>Add to Cart</span>
+            </button>
         </div>
-
-
-    
      `;
 
     name.innerHTML = details;
@@ -304,8 +282,8 @@ function createProduct(response, p_id){
     p_careinfo = document.getElementById('p_careinfo');
     p_careinfo.innerHTML = response.info.careInfo;
 
-    p_id = document.getElementById('p_id');
-    p_id.innerHTML = response.id;
+    product_id = document.getElementById('p_id');
+    product_id.innerHTML = response.id;
 
     p_fit = document.getElementById('p_fit');
     p_fit.innerHTML = response.info.sizeAndFit;
@@ -315,91 +293,54 @@ function createProduct(response, p_id){
 
 }
 
-
-
-// document.cookie= JSON.stringify (
-//     {
-//         'cart' : [
-//             {
-//                 'product_id' : p_id,
-//                 'quantity' : ''
-//             }
-//         ]
-//     }
-// )
-// console.log(document.cookie);
-
-
-
-// //OBJECT COOKIE STORED FORMAT
-
-// {
-//     'cart' : [
-//         {
-//             'product_id' : '01351492',
-//             'product_quantity' : '2'
-//             'product_size' : 'XL'
-//         }
-//     ]
-// }
-
-//function (input p_id)
-//declare false bool
-//loop through each iteration
-//check if cart.length =0
-//if successful bool == same pid and same size == bool =true
-//add size
-
-
-
-function redirect(p_id){
+function redirect(price){
     //add to cart
-    console.log('entering redirect!');
-    
-    
+    // console.log('entering redirect!');
+
     // //view user's cart
     // var cart = cookie.cart;
     // console.log(p_id);
     var qty = document.getElementById('quantity').value;
     var size = document.getElementById('size_selected').value;
-    var p_id = p_id; //product id user was looking at
-     console.log(size); //WORKS! HALLELUJAH
-    console.log(qty); //WORKS! HALLELUJAH
-    console.log(p_id);
+
+    // console.log(size); //WORKS! HALLELUJAH
+    // console.log(qty); //WORKS! HALLELUJAH
+    // console.log(p_id);
     
 
     //validation for cart details
-    var cookie = document.cookie;
-    console.log(cookie);
-    cookie = JSON.parse(cookie); //object cookie as json stores string
+    var cookie = JSON.parse(document.cookie);
      
     //put into cookie
     var cart = cookie.cart; // cart object
-   // console.log(cart);
+
     var check = false;
-    if (cart.length != 0){ //if cart is not empty
-        for (item in cart){
-            var product_id = item.product_id;
-            var product_quantity = item.product_quantity;
-            var product_size = item.product_size;
+    if (cart.length > 0){ //if cart is not empty
+        for (item of cart){
+            var product_id = item['product_id'];
+            var product_quantity = parseInt(item['product_quantity'], 10);
+            var product_size = item['product_size'];
+
             if (product_id == p_id && product_size == size){
-                product_quantity+=1;
+                console.log('3rd nest')
+                item['product_quantity'] = product_quantity + parseInt(qty, 10);
                 check = true;
                 break;
             }
         }
     }
-    if (check ==false){
-        console.log('hi');
+    if (check === false){
         cart.push({
             'product_id' : `${p_id}`,
-            'product_quantity' : `${qty}`,
-            'product_size' : `${p_id}`
+            'product_quantity': `${qty}`,
+            'product_size' : `${size}`,
+            'product_price': `${price}`
         });
-        console.log(cart);
-
     }
-   
+
+    // Update cookie
+    document.cookie = JSON.stringify(cookie) + '; path=/'
+
+    // Update status
+    
 }
-
-
