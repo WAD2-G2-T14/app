@@ -1,6 +1,3 @@
-var cookie = document.cookie
-cookie = JSON.parse(cookie)
-
 var all_products
 
 var item_details
@@ -30,16 +27,12 @@ xhr.setRequestHeader("x-rapidapi-key", "7626da75e9msh156d2ae86669dbbp1ba489jsn9b
 
 xhr.send(data);
 
-//function for creating coookie!
 function push(p_id){
-  //console.log('entering function push');
+  var cookie = JSON.parse(document.cookie)
   cookie['product_id'] = p_id;
+  document.cookie = JSON.stringify(cookie) + '; path=/'
 
-  console.log(p_id);
-  console.log('original cook:' +cookie);
-  cookie['product_id'] = p_id;
-  console.log('new cookie: ' +cookie);
-  // window.location.href ='pages/listing_page.html';
+  window.location.href ='pages/listing_page.html'
 }
 
 
@@ -69,7 +62,7 @@ function display(){
     counter += 1
     trending_listings.innerHTML += `
         <div class="col-sm-12 col-md-6 col-lg-3">
-            <div class="card mx-auto" onclick="push(${all_products[i].id})" style="width: 18rem; height: 30rem; margin-top: 18px;">
+            <div class="card mx-auto" onclick="push(${item_id})" style="width: 18rem; height: 30rem; margin-top: 18px;">
                 <img src='http://${all_products[i].imageUrl}' class="card-img-top" alt="...">
                 
                 <div class="item-time">
@@ -156,7 +149,7 @@ function display(){
       if(i != 11){
         recommended_listings.innerHTML += `
           <div class="col-sm-12 col-md-6 col-lg-3">
-              <div class="card mx-auto" onclick="push(${all_products[i].id})" style="width: 18rem; height: 30rem; margin-top: 20px;">
+              <div class="card mx-auto" onclick="push(${item_id})" style="width: 18rem; height: 30rem; margin-top: 20px;">
                   <img src='http://${all_products[i].imageUrl}' class="card-img-top" alt="...">
                   
                   <div class="item-time">
