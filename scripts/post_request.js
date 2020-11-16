@@ -27,7 +27,7 @@
                 var user_id = json["user_id"];
                 var email = json["email"];
 
-                document.cookie =  JSON.stringify({
+                document.cookie = JSON.stringify({
                     "user_details": {
                         "id": user_id,
                         "fullname": fullname,
@@ -36,8 +36,7 @@
                     },
                     "cart": [],
                     "product_id": ""
-                })
-                document.cookie += '; path=/'
+                }) + '; path=/'
 
                 window.location.href ='../';
             }
