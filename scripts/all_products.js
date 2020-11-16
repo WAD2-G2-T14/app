@@ -58,7 +58,7 @@ function display(){
     else{
       var progress = 0
       var current_orders = 0
-      var total_required = 10
+      var total_required = '??'
     }
 
     trending_listings.innerHTML += `
