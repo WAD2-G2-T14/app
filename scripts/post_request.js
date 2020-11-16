@@ -38,11 +38,12 @@
                 "email": email,
                 "phone": phone
                 },
-                "cart": [],
-                "product_id": "",
+                "cart": [{'product_id': '20622707'
+                       } ],
+                "product_id": "20622707",
                 })
             console.log(document.cookie);
-            window.location.href ='homepage.html';  
+            window.location.href ='../index.html';  
             }
         })
         }
@@ -82,6 +83,7 @@
             .then(response => response.json())
             .then(json => {
             console.log(json);
+            alert('You have signed up! Log in now!');
         });
         }
 

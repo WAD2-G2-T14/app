@@ -15,18 +15,25 @@
 
 // }
 
+function direct_home(){
+    window.location.href ='userprofile.html';
+}
+
 function bind_api(){
     call_api();
     
 }
 
+var cookie_id = document.cookie;
+var p_id = cookie_id['product_id'];
+
 function api_database(){
-    var cookie_id = document.cookie;
+    
     var request = new XMLHttpRequest();
     request.onreadystatechange=function(){
         if(this.readyState ==4 && this.status ==200){
             //request!
-            //console.log(this.responseText);
+            console.log(this.responseText);
             var response_json = JSON.parse(this.responseText);
             console.log(response_json); //response from database on item
             //occupied(response_json);
@@ -101,14 +108,17 @@ function api_database(){
 }
 
 
+function checkOut(){
+    console.log('running checkout');
+    window.location.href ='checkout.html';
+}
 
 
-
-function call_api(){
+function call_api(p_id){
     //console.log(document.cookie);
     var cookie_id = document.cookie;
     var data = null;
-
+    var p_id = '20622707';
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = false;
     
@@ -117,21 +127,21 @@ function call_api(){
             //console.log(this.responseText);
             var response_json = JSON.parse(this.responseText);
             createProduct(response_json);
-            //console.log(response_json);
+            console.log(response_json);
             //console.log(response_json.alternateNames[0].title);
         }
     });
     
     xhr.open("GET", `https://asos2.p.rapidapi.com/products/v3/detail?store=US&sizeSchema=US&lang=en-US&currency=USD&id=20622707`);
     xhr.setRequestHeader("x-rapidapi-host", "asos2.p.rapidapi.com");
-    xhr.setRequestHeader("x-rapidapi-key", "9fd2e4fe08mshaebad2c1add2ab1p1ae36djsnebc50a98407d");
+    xhr.setRequestHeader("x-rapidapi-key", "0592359968mshc6e4654c81accf9p1a722fjsn56d295fe6ca6");
     
     xhr.send(data);
 }
 
-function createProduct(response){
+function createProduct(response, p_id){
     //console.log('entering create prod!!'); // pass
-
+    
     var images = response.media.images;
     // get sizes array
     var sizesAvail_arr = response.variants;
@@ -272,7 +282,7 @@ function createProduct(response){
     <small class ='wordspace' style='font-weight:700; font-size:14px; margin-bottom:30px;'>QUANTITY: </small>
     <input min='0' type="number" id="quantity" class="form-control" aria-label="Quantity" aria-describedby="basic-addon3">
         <div class="container text-center white-text py-3">
-        <button class="cartBtn mask rgba-black-strong d-flex align-items-center h-100 mt-3" onclick='redirect(20622707)'><span>Add to Cart</span></button>
+        <button class="cartBtn mask rgba-black-strong d-flex align-items-center h-100 mt-3" onclick='redirect(${p_id})'><span>Add to Cart</span></button>
         </div>
 
 
@@ -353,16 +363,19 @@ function redirect(p_id){
     var qty = document.getElementById('quantity').value;
     var size = document.getElementById('size_selected').value;
     var p_id = p_id; //product id user was looking at
-    // console.log(size); //WORKS! HALLELUJAH
-    // console.log(qty); //WORKS! HALLELUJAH
+     console.log(size); //WORKS! HALLELUJAH
+    console.log(qty); //WORKS! HALLELUJAH
+    console.log(p_id);
     
 
     //validation for cart details
     var cookie = document.cookie;
+    console.log(cookie);
     cookie = JSON.parse(cookie); //object cookie as json stores string
      
     //put into cookie
     var cart = cookie.cart; // cart object
+   // console.log(cart);
     var check = false;
     if (cart.length != 0){ //if cart is not empty
         for (item in cart){
@@ -377,11 +390,14 @@ function redirect(p_id){
         }
     }
     if (check ==false){
+        console.log('hi');
         cart.push({
             'product_id' : `${p_id}`,
             'product_quantity' : `${qty}`,
             'product_size' : `${p_id}`
-        })
+        });
+        console.log(cart);
+
     }
    
 }

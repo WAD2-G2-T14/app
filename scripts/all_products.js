@@ -1,3 +1,6 @@
+console.log(document.cookie);
+
+
 var item_details
 fetch('../api/items/all.php')
 .then(response => response.json())
@@ -33,6 +36,18 @@ xhr.send(data);
 //   //console.log(document.cookie);
 //   window.location.href ='listing_page.html';
 // }
+function push(p_id){
+  //console.log('entering function push');
+  var cookie = document.cookie;
+  cookie['product_id'] = p_id;
+  //console.log(document.cookie);
+  window.location.href ='listing_page.html';
+}
+
+
+function direct_home(){
+  window.location.href ='pages/userprofile.html';
+}
 
 function display(all_products){
   var trending_listings = document.getElementById("trending_cards");
@@ -59,7 +74,7 @@ function display(all_products){
     //   counter += 1
       trending_listings.innerHTML += `
       <div class="col-sm-12 col-md-6 col-lg-3">
-      <div class="card mx-auto" style="width: 18rem; height: 30rem; margin-top: 20px;">
+      <div class="card mx-auto"  onclick="push(${all_products[i].id})" style="width: 18rem; height: 30rem; margin-top: 20px;">
           <img src='http://${all_products[i].imageUrl}' class="card-img-top" alt="...">
           
           <div class="item-time">

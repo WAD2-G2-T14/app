@@ -1,3 +1,5 @@
+console.log(document.cookie);
+
 var item_details
 fetch('api/items/all.php')
 .then(response => response.json())
@@ -30,14 +32,23 @@ xhr.send(data);
 function push(p_id){
   //console.log('entering function push');
   var cookie = document.cookie;
+
+  console.log(p_id);
+  console.log('original cook:' +cookie);
   cookie['product_id'] = p_id;
-  //console.log(document.cookie);
-  window.location.href ='listing_page.html';
+  console.log('new cookie: ' +cookie);
+  window.location.href ='pages/listing_page.html';
 }
 
 // function sickbtn(){
 //   <a href="#aboutus-section"></a>
 // }
+
+
+
+function direct_home(){
+  window.location.href ='pages/userprofile.html';
+}
 
 
 function display(all_products){
@@ -244,7 +255,7 @@ function countdown(all_products) {
         var remMinutes = document.getElementById(`minutes_${i}`);
         var remSeconds = document.getElementById(`seconds_${i}`);
 
-        const item_id = all_products[i].id
+        const item_id = all_products[i].id;
 
         if (item_details[item_id]) {
             var expiryDate = new Date(item_details[item_id]['expiry']);
@@ -274,7 +285,3 @@ function countdown(all_products) {
 countdown(all_products);
 
 setInterval(countdown, 1000);
-
-// function sickbtn(){
-
-// }

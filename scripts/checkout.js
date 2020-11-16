@@ -1,76 +1,216 @@
-// function display(){
-//     console.log(document.cookie);
+// var cookie = document.cookie
+// coookie = JSON.parse(cookie)
 
-// }
-// take from backend user's address details and credit card details 
-// listing page sends over cookie for product quantity and price 
+// hardcoded cookie
+var cookie = {
+    "user_details": {
+        "id": "5fa40d29e57d4",
+        "fullname": "Jonathan Tan",
+        "email": "jonathan@mail.com",
+        "phone": "91234567"
+    },
+    "cart": [
+        {
+            "product_id": "20622707",
+            "name": "Based London Forged Boots with Waxy Faux Leather",
+            "quantity": "1"
+        },
+    ],
+        "product_id": "01351491"
+}
 
-// get the u_id from cookie
-// var u_id = '5fa40d29e57d4';
-var cookie = document.cookie;
-cookie = JSON.parse(cookie);
-var u_id = cookie.user_details.id;
+// Variables from cooke
+var user_id = cookie['user_details']['id']
+var cart = cookie['cart']
+
+// Page States
 
 
-var user_addresses
-fetch(`../api/user/address_all.php?user_id=${u_id}`)
-.then(response => response.json())
-// .then(json => console.log(json))
-.then(json => {
-    user_addresses = json
-    for(user of user_addresses){ 
-        if(u_id == user['user_id']){
-            console.log('hi');
-            var address = user['user_address'];
-            var postal_code = user['postal_code'];
-            var city = user['city'];
-            var country = user['country'];
-    
-            console.log(address);
+function initialLoad() {
+    displayCart()
+    displayAddresses()
+}
+
+function displayCart() {
+    const cartElement = document.getElementById('cartItems')
+
+    let count = 1
+    let total = 0
+    for (item of cart) {
+        const item_id = item['product_id']
+        const quantity = item['quantity']
+
+        // const itemDetails = function
+        // const name = itemDetails['name']
+        const name = item['name']
+        // const price = itemDetails['price']
+
+        const str = `
+            <div class='d-flex justify-content-between'>
+                <span>${count}. ${name}</span>
+                <span>x${quantity}</span>
+              </div>
+        `
+
+        cartElement.innerHTML += str
+        count++
+        // total += price
+    }
+
+    const totalAmountElement = document.getElementById('totalAmount')
+    totalAmountElement.innerHTML = '$' + total
+}
+
+function displayAddresses() {
+
+    var addressArray
+    fetch(`../api/user/address_all.php?user_id=${user_id}`)
+    .then(response => response.json())
+    .then(json => {
+        addressArray = json
+
+        const addressBoxArray = document.getElementById('addressBoxes')
+        let count = 1
+        for(anAddress of addressArray){ 
+            const address = anAddress['user_address'];
+            const postal_code = anAddress['postal_code'];
+            const city = anAddress['city'];
+            const country = anAddress['country'];
+
+            const id = 'addressBox' + count
+        
+            const str = `
+                <div class='addressBox' id='${id}' onclick="handleAddressBoxClick('${id}')">
+                    <p>${address}</p>
+                    <p>${city}, ${postal_code}</p>
+                    <b>${country.toUpperCase()}</b>
+                </div>
+            `
+            addressBoxArray.innerHTML += str
+            count++
         }
-}})
 
-// inside array use of, inside object use in 
+        const detailsBoxElement = document.getElementById('detailsBox')
+        const str = `
+            <div>
+                <p><b>${cookie['user_details']['fullname']}</b></p>
+                <p>${cookie['user_details']['email']}</p>
+                <p>${cookie['user_details']['phone']}</p>
+            </div>
+        `
+        detailsBoxElement.innerHTML += str
+    })
 
+}
 
+function displayCreditCards() {
+    var cardArray
+    fetch(`../api/user/credit_card_all.php?user_id=${user_id}`)
+    .then(response => response.json())
+    .then(json => {
+        cardArray = json
 
+        const creditCardBoxElement = document.getElementById('creditCardBox')
+        let count = 1
+        for (card of cardArray) {
+            var card_number = card['card_number']
+            var cardholder_name = card['cardholder_name']
+            var expiry = card['expiry']
 
-var user_cards
-fetch(`../api/user/credit_card_all.php?user_id=${u_id}`)
-.then(response => response.json())
-// .then(json => console.log(json))
-.then(json => {
-    user_cards = json
-    for(user of user_cards){
-        if(u_id == user['user_id']){
-            var card_number = user['card_number'];
-            var cardholder_name = user['cardholder_name'];
-            var expiry = user['expiry'];
-            var cvv_number = user['cvv_number'];
-
-            console.log(card_number)
+            const id = 'cardBox' + count
+            const str = `
+                <div class='addressBox' id='${id}' onclick="handleAddressBoxClick('${id}')">
+                    <p><b>${card_number}</b></p>
+                    <p>Name: ${cardholder_name}</p>
+                    <p>Expiry: ${expiry}</p>
+                </div>
+            `
+            creditCardBoxElement.innerHTML += str
+            count++
         }
-    }})
+    })
+}
 
 
-// take from cookie? 
-//var name = user_details[user_id]['name'];
-//var email = user_details[user_id]['email'];
+function handleAddressBoxClick(id) {
+    const addressBoxes = document.getElementsByClassName('addressBox')
+    for (item of addressBoxes) {
+        item.style = ''
+    }
 
+    const addressBoxElement = document.getElementById(id)
+    addressBoxElement.style = 'background-color: #FED143;'
+}
 
+function handleFinishStep1() {
+    // update tabs
+    var actives = document.getElementsByClassName("active");
+    actives[0].className = actives[0].className.replace("active", "disabled");
 
-// InnerHTML into the div 
-// var delivery_address = document.getElementById("information-tab");
-// delivery_address.innerHTML += `
-// ${user_address} <br>
-// ${city} <br>
-// ${postal_code} <br>
-// ${country} <br>
+    var disabled = document.getElementsByClassName("disabled");
+    disabled[1].className = disabled[1].className.replace("disabled", "active")
 
-// Contact Information 
-// ${name} <br>
-// ${email}
-// `;
+    // update page content
+    const tabElement = document.getElementById('myTabContent')
+    tabElement.innerHTML = `
+        <div style='border: 1px lightgrey solid' class='mt-4 p-4' id='creditCardBox'>
+            <b>CREDIT CARDS</b>
+            <hr>
 
-// var delivery_payment = document.getElementById("delivery&payment-tab");
-// delivery_payment.innerHTML += ``;
+        </div>
+
+        <button class="button mt-5" onclick="handleFinishStep2()">Place Order</button>
+    `
+
+    displayCreditCards()
+}
+
+function handleFinishStep2() {
+    let formattedCart = []
+    cart.forEach(item => {
+        formattedCart.push({
+            "item_id": item['product_id'],
+            "quantity": item['quantity']
+        })
+    })
+
+    // API call
+    fetch("../api/items/order.php", {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            "user_id": user_id,
+            "item_list": formattedCart
+        })
+    })
+    .then((res) => {
+        // update tabs
+        var actives = document.getElementsByClassName("active");
+        actives[0].className = actives[0].className.replace("active", "disabled");
+
+        var disabled = document.getElementsByClassName("disabled");
+        disabled[2].className = disabled[2].className.replace("disabled", "active")
+
+        // update page content
+        const tabElement = document.getElementById('myTabContent')
+        tabElement.innerHTML = `
+        <div class='mt-4'>
+            <b>Your order has been placed successfully</b>
+        </div>
+        <button class="button mt-5" onclick="handleFinishStep3()">Go back to Home</button>
+        `
+
+        displayCreditCards()
+    })
+
+}
+
+function handleFinishStep3() {
+    const tabElement = document.getElementById('myTabContent')
+    tabElement.innerHTML = ``
+    window.location.href = '../'
+}
+
