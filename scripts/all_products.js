@@ -33,7 +33,7 @@ function push(p_id) {
   cookie['product_id'] = p_id;
   document.cookie = JSON.stringify(cookie) + '; path=/'
 
-  window.location.href = 'pages/listing_page.html'
+  window.location.href = 'listing_page.html'
 }
 
 
