@@ -28,12 +28,12 @@ xhr.setRequestHeader("x-rapidapi-key", "7626da75e9msh156d2ae86669dbbp1ba489jsn9b
 
 xhr.send(data);
 
-function push(p_id){
-  //console.log('entering function push');
-  var cookie = document.cookie;
+function push(p_id) {
+  var cookie = JSON.parse(document.cookie)
   cookie['product_id'] = p_id;
-  //console.log(document.cookie);
-  window.location.href ='listing_page.html';
+  document.cookie = JSON.stringify(cookie) + '; path=/'
+
+  window.location.href = 'pages/listing_page.html'
 }
 
 
