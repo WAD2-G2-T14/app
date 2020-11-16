@@ -1,23 +1,5 @@
-// var cookie = document.cookie
-// coookie = JSON.parse(cookie)
-
-// hardcoded cookie
-var cookie = {
-    "user_details": {
-        "id": "5fa40d29e57d4",
-        "fullname": "Jonathan Tan",
-        "email": "jonathan@mail.com",
-        "phone": "91234567"
-    },
-    "cart": [
-        {
-            "product_id": "20622707",
-            "name": "Based London Forged Boots with Waxy Faux Leather",
-            "quantity": "1"
-        },
-    ],
-        "product_id": "01351491"
-}
+var cookie = document.cookie
+cookie = JSON.parse(cookie)
 
 // Variables from cooke
 var user_id = cookie['user_details']['id']
@@ -38,27 +20,28 @@ function displayCart() {
     let total = 0
     for (item of cart) {
         const item_id = item['product_id']
-        const quantity = item['quantity']
-
-        // const itemDetails = function
-        // const name = itemDetails['name']
-        const name = item['name']
-        // const price = itemDetails['price']
+        const quantity = item['product_quantity']
+        const name = item['product_name']
+        let price = item['product_price']
+        price = parseInt(price.slice(1, price.length), 10)
 
         const str = `
             <div class='d-flex justify-content-between'>
-                <span>${count}. ${name}</span>
+                <div class='d-flex justify-content-around'>
+                    <span>${count}.</span>
+                    <span>${name}</span>
+                </div>
                 <span>x${quantity}</span>
-              </div>
+            </div>
         `
 
         cartElement.innerHTML += str
         count++
-        // total += price
+        total += price
     }
 
     const totalAmountElement = document.getElementById('totalAmount')
-    totalAmountElement.innerHTML = '$' + total
+    totalAmountElement.innerHTML = 'SGD$ ' + total
 }
 
 function displayAddresses() {
