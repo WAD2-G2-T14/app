@@ -261,7 +261,7 @@ function createProduct(response){
         <small class ='wordspace' style='font-weight:700; font-size:14px; margin-bottom:30px;'>QUANTITY: </small>
         <input min='0' type="number" id="quantity" class="form-control" aria-label="Quantity" aria-describedby="basic-addon3">
         <div class="container text-center white-text py-3">
-            <button class="cartBtn mask rgba-black-strong d-flex align-items-center h-100 mt-3" onclick="redirect('${price}')">
+            <button class="cartBtn mask rgba-black-strong d-flex align-items-center h-100 mt-3" onclick="redirect('${title}', '${price}')">
                 <span>Add to Cart</span>
             </button>
         </div>
@@ -296,7 +296,7 @@ function createProduct(response){
 
 }
 
-function redirect(price){
+function redirect(name, price){
     //add to cart
     // console.log('entering redirect!');
 
@@ -337,7 +337,8 @@ function redirect(price){
             'product_id' : `${p_id}`,
             'product_quantity': `${qty}`,
             'product_size' : `${size}`,
-            'product_price': `${price}`
+            'product_price': `${price}`,
+            'product_name': `${name}`
         });
     }
 
