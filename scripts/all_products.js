@@ -1,5 +1,4 @@
-console.log(document.cookie);
-
+var all_products
 
 var item_details
 fetch('../api/items/all.php')
@@ -17,9 +16,9 @@ xhr.withCredentials = false;
 xhr.addEventListener("readystatechange", function () {
 	if (this.readyState === this.DONE) {
         var response_json = JSON.parse(this.responseText);
-        var all_products = response_json.products;
-        console.log(all_products);
-        display(all_products);
+        all_products = response_json.products;
+
+        display();
   }
 });
 
@@ -29,13 +28,6 @@ xhr.setRequestHeader("x-rapidapi-key", "7626da75e9msh156d2ae86669dbbp1ba489jsn9b
 
 xhr.send(data);
 
-//function for creating coookie!
-// function push(p_id){
-//   //console.log('entering function push');
-//   document.cookie = p_id;
-//   //console.log(document.cookie);
-//   window.location.href ='listing_page.html';
-// }
 function push(p_id){
   //console.log('entering function push');
   var cookie = document.cookie;
@@ -49,11 +41,11 @@ function direct_home(){
   window.location.href ='pages/userprofile.html';
 }
 
-function display(all_products){
+function display(){
   var trending_listings = document.getElementById("trending_cards");
   
 
-  for(i=0; i < all_products.length; i++){
+  for(let i = 0; i < all_products.length; i++){
     var item_id = all_products[i].id;
     
     // console.log(item_details);
@@ -62,7 +54,6 @@ function display(all_products){
       var progress =  (item_details[item_id]['current_orders'] / item_details[item_id]['total_required'])*100;
       var current_orders = item_details[item_id]['current_orders'];
       var total_required = item_details[item_id]['total_required'];
-
     }
     else{
       var progress = 0
@@ -70,11 +61,9 @@ function display(all_products){
       var total_required = 10
     }
 
-    
-    //   counter += 1
-      trending_listings.innerHTML += `
+    trending_listings.innerHTML += `
       <div class="col-sm-12 col-md-6 col-lg-3">
-      <div class="card mx-auto"  onclick="push(${all_products[i].id})" style="width: 18rem; height: 30rem; margin-top: 20px;">
+      <div class="card mx-auto"  onclick="push(${item_id})" style="width: 18rem; height: 30rem; margin-top: 20px;">
           <img src='http://${all_products[i].imageUrl}' class="card-img-top" alt="...">
           
           <div class="item-time">
@@ -135,16 +124,16 @@ function display(all_products){
       
       `;
     }
-    countdown(all_products);
+    countdown();
 
     setInterval(countdown, 1000);
 }
 
-function countdown(all_products) {
+function countdown() {
 
     var formatTime = (time) => (time < 10 ? `0${time}` : time);
 
-    for (let i=0; i<12; i++) {
+    for (let i = 0; i < all_products.length; i++) {
         var remDays = document.getElementById(`days_${i}`);
         var remHours = document.getElementById(`hours_${i}`);
         var remMinutes = document.getElementById(`minutes_${i}`);
@@ -175,7 +164,3 @@ function countdown(all_products) {
         }
     }
 };
-
-// initial call
-
-
