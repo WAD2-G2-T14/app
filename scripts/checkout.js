@@ -143,10 +143,13 @@ function handleFinishStep1() {
 
         </div>
 
-        <button class="button mt-5" onclick="handleFinishStep2()">Place Order</button>
+        <div class='d-flex justify-content-end'>
+            <button class="button mt-3" onclick="handleFinishStep2()">Place Order</button>
+        </div>
     `
 
     displayCreditCards()
+    clearCart()
 }
 
 function handleFinishStep2() {
@@ -181,10 +184,12 @@ function handleFinishStep2() {
         // update page content
         const tabElement = document.getElementById('myTabContent')
         tabElement.innerHTML = `
-        <div class='mt-4'>
-            <b>Your order has been placed successfully</b>
+        <div class='mt-4 text-center'>
+            <span class='font-weight-bold text-success'>Your order has been placed successfully</span>
         </div>
-        <button class="button mt-5" onclick="handleFinishStep3()">Go back to Home</button>
+        <div class='d-flex justify-content-center'>
+            <button class="button mt-3" onclick="handleFinishStep3()">Go Back to Home</button>
+        </div>
         `
 
         displayCreditCards()
@@ -198,3 +203,8 @@ function handleFinishStep3() {
     window.location.href = '../'
 }
 
+function clearCart() {
+    var cookie = JSON.parse(document.cookie)
+    cookie.cart = []
+    document.cookie = JSON.stringify(cookie) + '; path=/'
+}
