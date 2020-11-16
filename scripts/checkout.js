@@ -22,14 +22,15 @@ function displayCart() {
         const item_id = item['product_id']
         const quantity = item['product_quantity']
         const name = item['product_name']
+        const size = item['product_size']
         let price = item['product_price']
         price = parseInt(price.slice(1, price.length), 10)
 
         const str = `
             <div class='d-flex justify-content-between'>
                 <div class='d-flex justify-content-around'>
-                    <span>${count}.</span>
-                    <span>${name}</span>
+                    <span class='font-weight-bold'>${count}.</span>
+                    <span class='text-dark'>${name} <span class='text-muted'>(${size})</span></span>
                 </div>
                 <span>x${quantity}</span>
             </div>
@@ -37,7 +38,7 @@ function displayCart() {
 
         cartElement.innerHTML += str
         count++
-        total += price
+        total += price * quantity
     }
 
     const totalAmountElement = document.getElementById('totalAmount')
