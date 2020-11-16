@@ -1,3 +1,6 @@
+var cookie = JSON.parse(document.cookie)
+var user_id = cookie['user_details']['id']
+
 function display_default(){
     var sidebarContainer = document.getElementsByClassName("sidebar");
     var sidebarItems = document.getElementsByClassName("link"); 
@@ -18,9 +21,9 @@ function display_default(){
 
 //CALL details FROM DB AND DISPLAY details
 function retrieve_my_details(){
-    console.log("inside retrieve_my_details function");
+    // console.log("inside retrieve_my_details function");
 
-    fetch("../api/user/details.php?user_id=5fa40d29e57d4")
+    fetch(`../api/user/details.php?user_id=${user_id}`)
     .then(response => response.json())
     .then(json => {
         console.log(json);
@@ -183,7 +186,7 @@ function new_password_page(){
 function retrieve_current_password(){
     console.log("inside retrieve_current_password function");
 
-    fetch("../api/user/details.php?user_id=5fa40d29e57d4")
+    fetch("../api/user/details.php?user_id=${user_id}")
     .then(response => response.json())
     .then(json => {
         // console.log(json);
@@ -337,7 +340,6 @@ function post_add_address(){
     
     // console.log("inside post_add_address function");
 
-    var user_id = "5fa40d29e57d4";       
     var address = document.getElementById("search_input").value;
     var postal_code = document.getElementById("postal_code").value;
     var city = document.getElementById("city").value;
@@ -371,7 +373,7 @@ function post_add_address(){
 function display_saved_address(){
     // console.log("inside display_saved_address function");
 
-    fetch("../api/user/address_all.php?user_id=5fa40d29e57d4")
+    fetch("../api/user/address_all.php?user_id=${user_id}")
     .then(response => response.json())
     .then(json => {
         // console.log(json);
@@ -504,7 +506,6 @@ function post_add_card(){
     
     console.log("inside post_add_card function");
 
-    var user_id = "5fa40d29e57d4";
     var card_number = document.getElementById("add_card_number").value;
     var cardholder_name = document.getElementById("add_card_name").value;
     var expiry = document.getElementById("add_card_expiry_date").value;
@@ -538,7 +539,7 @@ function post_add_card(){
 function display_saved_card(){
     // console.log("inside display_saved_card function");
 
-    fetch("../api/user/credit_card_all.php?user_id=5fa40d29e57d4")
+    fetch("../api/user/credit_card_all.php?user_id=${user_id}")
     .then(response => response.json())
     .then(json => {
         // console.log(json);
@@ -690,7 +691,6 @@ function display_have_orders(){
 function edit_my_details(){
     console.log("inside edit_my_details function");
 
-    var user_id="5fa40d29e57d4";
     var new_fullname = document.getElementById("my_details_fullname").value;
     var new_email = document.getElementById("my_details_email").value;
     var new_mobile_number = document.getElementById("my_details_mobile_number").value;
