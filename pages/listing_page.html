@@ -382,64 +382,49 @@
   </head>
   <body onload ="bind_api()">
     
-  <!--nav bar-->
     <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand" href="/index.html">
-          <img src="../images/logoBlack.svg" height="50px">
-      </a>
+        <a class="navbar-brand" href="/index.html">
+            <img src="../images/logoBlack.svg" height="50px">
+        </a>
+    
+        <div class="d-inline-flex navigations">
+            <div class="input-wrapper">
+                <input class="input" type="text" placeholder="Search">
+            </div>
+        </div>
+    
+        <div class="d-inline-flex">
+            <div class="btn-group mx-2">
+                <!-- add to cart // change cart display -->
+                <button type="button dropdown" class="cart" data-toggle="dropdown" onclick='nav_createProduct()'>
+                    <img src="../images/shoppingCart.svg" height="20px" alt="Shopping Cart">
+                </button>
+    
+                <div class="dropdown-menu dropdown-menu-right dropdown-content">
+                    <div id='cart_items' class="px-4 py-3 " style='height:250px; width:450px;'>
+                        <!--cart items description-->
+                    </div>
+                    <div class="dropdown-divider "></div>
+                    <a class="dropdown-item nav_btn" style=" height:50px;" href="#" onclick='checkOut()'>
+                        <div>
+                            View Checkout
+                        </div>
+                    </a>
+                </div>
+            </div>
+    
+            <div class="btn-group">
+                <button type="button" class="btn" data-toggle="dropdown" onclick="nav_displayAvatarDropdown()">
+                    <img src="../images/userProfile.svg" height="40px" alt="Avatar">
+                </button>
+    
+                <div class="dropdown-menu dropdown-menu-right " style='width:300px; height:250px;' id='avatarDropdown'>
+                    
+                </div>
+            </div>
+        </div>
+    </nav>
 
-      <div class="d-inline-flex navigations">
-              <div class="input-wrapper">
-                  <input class="input" type="text" placeholder="Search">
-              </div>
-      </div>
-
-      <div class="d-inline-flex">
-          <div class="btn-group mx-2">
-              <!-- add to cart // change cart display -->
-              <button type="button dropdown" class="cart" data-toggle="dropdown" onclick='nav_createProduct()'>
-                  <img src="../images/shoppingCart.svg" height="20px" alt="Shopping Cart">
-              </button>
-
-
-              <div class="dropdown-menu dropdown-menu-right dropdown-content"  >
-                  <div id = 'cart_items' class="px-4 py-3 " style='height:250px; width:450px;'>
-                      <!--cart items description-->
-                  </div>
-                  <div class="dropdown-divider " ></div>
-                  <a class="dropdown-item nav_btn" style=" height:50px;" href="#"  onclick='checkOut()'> 
-                      <!--<button type="button" class="btn btn-light" style ='margin-left:300px;'>Check Out</button> -->
-                      <div>
-                          View Checkout
-                      </div>
-                  </a>
-
-
-              </div>
-          </div>
-          <div class="btn-group">
-              <button type="button" class="btn" data-toggle="dropdown" >
-                  <img src="../images/userProfile.svg" height="40px" alt="Avatar">
-              </button>
-          
-              <div class="dropdown-menu dropdown-menu-right " style ='width:300px; height:250px;'>
-
-
-                  <div style=' height:80px;' class =' d-flex justify-content-center'>
-                      <img src="../images/logoBlack.svg" style='height:55px; margin-top:14px;'> 
-                  </div>
-                  <hr>
-                  <p class='text-center' id='card-text'>Welcome! Happy Shopping with Close to Zero Shipping Fees!</p>
-                
-                      <button type="submit" class="btn nav_btn ml-4" onclick ='direct_home()' style='height:40px; padding-top:5px; margin-top:20px;width: 250px;'>My Profile and Details</button>
-          
-
-              </div>
-          </div>
-      </div>
-  </nav>
-      
-      
 
       <!-- product images
       <div class ='container' id ='prodImages'> </div> -->

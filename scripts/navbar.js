@@ -1,10 +1,17 @@
+if (document.cookie === '') {
+    let cookie = {
+        "product_id": ""
+    }
+    document.cookie = JSON.stringify(cookie) + '; path=/'
+}
+
 var cookie = JSON.parse(document.cookie)
 var cart = cookie.cart
 
 
 function checkOut(){
     console.log('running checkout');
-    window.location.href ='checkout.html';
+    window.location.href ='/pages/checkout.html';
 }
 
 function nav_call_api(item_p_id, item_name, item_quantity, item_size, item_price){
@@ -17,7 +24,7 @@ function nav_call_api(item_p_id, item_name, item_quantity, item_size, item_price
         if (this.readyState === this.DONE) {
             //console.log(this.responseText);
             var response_json = JSON.parse(this.responseText);
-            console.log(response_json);
+            // console.log(response_json);
             
             //console.log(response_json);
             //console.log(response_json.alternateNames[0].title);
@@ -65,3 +72,41 @@ function nav_createProduct(){
         nav_call_api(item_p_id, item_name, item_quantity, item_size, item_price);
     }
 }
+
+function nav_displayAvatarDropdown() {
+    const avatarDropdownElement = document.getElementById('avatarDropdown')
+
+    if (cookie['user_details'] !== undefined) {
+        const name = cookie['user_details']['fullname']
+
+        avatarDropdownElement.innerHTML = `
+            <div style=' height:80px;' class =' d-flex justify-content-center'>
+                <img src="../images/logoBlack.svg" style='height:55px; margin-top:14px;'> 
+            </div>
+            <hr>
+            <p class='text-center' id='card-text'>Welcome ${name}!</p>
+
+            <button type="submit" class="btn nav_btn ml-4" onclick ='nav_redirect_profile()' style='height:40px; padding-top:5px; margin-top:20px;width: 250px;'>My Profile and Details</button>
+        `
+    } else {
+        avatarDropdownElement.innerHTML = `
+            <div style=' height:80px;' class =' d-flex justify-content-center'>
+                <img src="../images/logoBlack.svg" style='height:55px; margin-top:14px;'> 
+            </div>
+            <hr>
+            <p class='text-center' id='card-text'>Hello, join the club to start shopping!</p>
+
+            <button type="submit" class="btn nav_btn ml-4" onclick ='nav_redirect_login()' style='height:40px; padding-top:5px; margin-top:20px;width: 250px;'>Login/ Sign Up</button>
+        `
+    }
+}
+
+function nav_redirect_profile() {
+    window.location.href = '/pages/userprofile.html';
+}
+
+function nav_redirect_login() {
+    window.location.href = '/pages/login.html';
+}
+
+// displayAvatarDropdown()

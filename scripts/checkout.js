@@ -157,7 +157,7 @@ function handleFinishStep2() {
     cart.forEach(item => {
         formattedCart.push({
             "item_id": item['product_id'],
-            "quantity": item['quantity']
+            "quantity": item['product_quantity']
         })
     })
 
