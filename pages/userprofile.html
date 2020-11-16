@@ -68,6 +68,48 @@
 </head>
 
 <body onload="display_default()">
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="/index.html">
+            <img src="../images/logoBlack.svg" height="50px">
+        </a>
+    
+        <div class="d-inline-flex navigations">
+            <div class="input-wrapper">
+                <input class="input" type="text" placeholder="Search">
+            </div>
+        </div>
+    
+        <div class="d-inline-flex">
+            <div class="btn-group mx-2">
+                <!-- add to cart // change cart display -->
+                <button type="button dropdown" class="cart" data-toggle="dropdown" onclick='nav_createProduct()'>
+                    <img src="../images/shoppingCart.svg" height="20px" alt="Shopping Cart">
+                </button>
+    
+                <div class="dropdown-menu dropdown-menu-right dropdown-content">
+                    <div id='cart_items' class="px-4 py-3 " style='height:250px; width:450px;'>
+                        <!--cart items description-->
+                    </div>
+                    <div class="dropdown-divider "></div>
+                    <a class="dropdown-item nav_btn" style=" height:50px;" href="#" onclick='checkOut()'>
+                        <div>
+                            View Checkout
+                        </div>
+                    </a>
+                </div>
+            </div>
+    
+            <div class="btn-group">
+                <button type="button" class="btn" data-toggle="dropdown" onclick="nav_displayAvatarDropdown()">
+                    <img src="../images/userProfile.svg" height="40px" alt="Avatar">
+                </button>
+    
+                <div class="dropdown-menu dropdown-menu-right " style='width:300px; height:250px;' id='avatarDropdown'>
+    
+                </div>
+            </div>
+        </div>
+    </nav>
 
 
     <!-- <div class="wrapper"> -->

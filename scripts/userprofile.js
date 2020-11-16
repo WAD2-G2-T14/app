@@ -621,7 +621,7 @@ function display_orders_page(){
         <div class="text-center">
             <img src="https://img.icons8.com/windows/96/000000/hanger.png"/>
             <h5>You currently have no orders</h5>
-            Best get shopping Supreme Shopping Club!
+            Start Shopping at Supreme Shopping Club!
             <br><br>
             <button class="shadow-none" onclick="redirect_to_home_page()">START SHOPPING</button>
             <br><br>
@@ -640,7 +640,7 @@ function display_no_orders(){
         <div class="text-center">
             <img src="https://img.icons8.com/windows/96/000000/hanger.png"/>
             <h5>You currently have no orders</h5>
-            Best get shopping Supreme Shopping Club!
+            Start Shopping at Supreme Shopping Club!
             <br><br>
             <button class="shadow-none" onclick="redirect_to_home_page()">START SHOPPING</button>
             <br><br>
