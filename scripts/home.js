@@ -56,7 +56,7 @@ function display(){
     else {
       var progress = 0
       var current_orders = 0
-      var total_required = 10
+      var total_required = '??'
     }
 
     counter += 1
@@ -136,14 +136,14 @@ function display(){
       var item_id = all_products[i].id;
 
       if(item_details.length !== 0 && item_id in item_details){
-        var progress =  (item_details[item_id]['current_orders'] / item_details[item_id]['total_required'])*100
         var current_orders = item_details[item_id]['current_orders'];
         var total_required = item_details[item_id]['total_required'];
+        var progress = (item_details[item_id]['current_orders'] / (total_required === '??' ? 1 : total_required)) * 100
       }
       else{
         var progress = 0
         var current_orders = 0
-        var total_required = 10
+        var total_required = '??'
       }
       
       if(i != 11){
