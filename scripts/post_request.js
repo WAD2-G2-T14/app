@@ -37,6 +37,7 @@
                     "cart": [],
                     "product_id": ""
                 })
+                document.cookie += '; path=/'
 
                 window.location.href ='../';
             }
