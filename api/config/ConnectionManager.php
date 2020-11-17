@@ -5,9 +5,9 @@ class ConnectionManager {
     public function connect() {
         $servername = 'localhost';
         $username = 'root';
-        $password = 'root';
+        $password = '';
         $dbname = 'shopping_club_db';
-        $port = '8889';
+        $port = '3306';
         
         // Create connection
         $conn = new PDO("mysql:host=$servername;dbname=$dbname;port=$port", $username, $password);     
