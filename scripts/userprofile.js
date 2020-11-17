@@ -538,7 +538,7 @@ function post_add_card(){
 function display_saved_card(){
     // console.log("inside display_saved_card function");
 
-    fetch("../api/user/credit_card_all.php?user_id=${user_id}")
+    fetch(`../api/user/credit_card_all.php?user_id=${user_id}`)
     .then(response => response.json())
     .then(json => {
         // console.log(json);
